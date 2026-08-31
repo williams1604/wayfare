@@ -287,6 +287,7 @@
             localStorage.setItem('wayfare_reviews', JSON.stringify(revs));
         },
         updateHeaderNav: function () {
+            this.ensureModalsExist();
             const navUserArea = document.getElementById('nav-user-area');
             if (!navUserArea) return;
 
@@ -304,16 +305,210 @@
                 `;
             } else {
                 navUserArea.innerHTML = `
-                    <a href="index.html#signin" onclick="openLoginModal(event)"
+                    <button onclick="openLoginModal(event)"
                       class="hidden md:block px-7 py-3.5 text-sm font-medium text-[#FF6B35] border-2 border-[#FF6B35] rounded-lg mr-4 hover:bg-[#FF6B35] hover:text-white transition-colors">
                       Login
-                    </a>
+                    </button>
                     <a href="packages.html" class="px-7 py-3.5 text-sm font-medium text-white bg-[#FF6B35] rounded-lg hover:bg-[#e55a2b] transition-colors shadow-md">
                       Book Now
                     </a>
                 `;
             }
+        },
+        ensureModalsExist: function () {
+            if (!document.getElementById('loginModal')) {
+                const loginDiv = document.createElement('div');
+                loginDiv.id = 'loginModal';
+                loginDiv.className = 'hidden fixed inset-0 z-[100] flex items-center justify-center p-4';
+                loginDiv.innerHTML = `
+                    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeLoginModal()"></div>
+                    <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden p-6 z-10">
+                      <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold text-[#2D3142]">Sign In</h3>
+                        <button onclick="closeLoginModal()" class="text-gray-400 hover:text-gray-600">
+                          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
+                      <form id="loginForm" onsubmit="submitLogin(event)" class="space-y-4">
+                        <div>
+                          <label class="block text-xs font-semibold text-gray-600 mb-1">Email</label>
+                          <input type="email" id="loginEmail" required class="w-full px-4 py-3 border rounded-xl text-sm" placeholder="john@example.com / admin@wayfare.com" />
+                        </div>
+                        <div>
+                          <label class="block text-xs font-semibold text-gray-600 mb-1">Password</label>
+                          <input type="password" id="loginPassword" required class="w-full px-4 py-3 border rounded-xl text-sm" placeholder="••••••••" />
+                        </div>
+                        <button type="submit" class="w-full bg-[#FF6B35] text-white font-bold py-3.5 rounded-xl hover:bg-[#e55a2b] transition-colors shadow-lg">
+                          Sign In
+                        </button>
+                        <p class="text-center text-xs text-gray-500 mt-4">
+                          Demo Admin: <span class="font-semibold text-gray-700">admin@wayfare.com</span> (Pass: admin123)
+                        </p>
+                      </form>
+                    </div>
+                `;
+                document.body.appendChild(loginDiv);
+            }
+
+            if (!document.getElementById('bookingModal')) {
+                const bkgDiv = document.createElement('div');
+                bkgDiv.id = 'bookingModal';
+                bkgDiv.className = 'hidden fixed inset-0 z-[100] flex items-center justify-center p-4';
+                bkgDiv.innerHTML = `
+                    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeBookingModal()"></div>
+                    <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden p-6 z-10">
+                      <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-[#2D3142]">Book <span id="modalPkgTitle" class="text-[#FF6B35]"></span></h3>
+                        <button onclick="closeBookingModal()" class="text-gray-400 hover:text-gray-600">
+                          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
+                      <form id="bookingForm" onsubmit="submitBooking(event)" class="space-y-4">
+                        <input type="hidden" id="modalPkgId" />
+                        <input type="hidden" id="modalPkgName" />
+                        <div class="grid grid-cols-2 gap-4">
+                          <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">First Name</label>
+                            <input type="text" id="bkgFirstName" required class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="John" />
+                          </div>
+                          <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Last Name</label>
+                            <input type="text" id="bkgLastName" required class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="Doe" />
+                          </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                          <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Email</label>
+                            <input type="email" id="bkgEmail" required class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="john@example.com" />
+                          </div>
+                          <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Phone</label>
+                            <input type="tel" id="bkgPhone" required class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="+1 (555) 123-4567" />
+                          </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                          <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Travel Date</label>
+                            <input type="date" id="bkgDate" required class="w-full px-3 py-2 border rounded-lg text-sm" />
+                          </div>
+                          <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Travelers</label>
+                            <input type="number" id="bkgTravelers" min="1" max="20" value="2" required class="w-full px-3 py-2 border rounded-lg text-sm" />
+                          </div>
+                        </div>
+                        <div>
+                          <label class="block text-xs font-semibold text-gray-600 mb-1">Special Requests</label>
+                          <textarea id="bkgRequests" rows="2" class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="Meal preferences, room type..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-[#FF6B35] text-white font-bold py-3.5 rounded-xl hover:bg-[#e55a2b] transition-colors shadow-lg">
+                          Proceed to Payment &rarr;
+                        </button>
+                      </form>
+                    </div>
+                `;
+                document.body.appendChild(bkgDiv);
+            }
         }
+    };
+
+    window.openLoginModal = function (e) {
+        if (e && e.preventDefault) e.preventDefault();
+        WayfareState.ensureModalsExist();
+        const m = document.getElementById('loginModal');
+        if (m) m.classList.remove('hidden');
+    };
+
+    window.closeLoginModal = function () {
+        const m = document.getElementById('loginModal');
+        if (m) m.classList.add('hidden');
+    };
+
+    window.submitLogin = function (e) {
+        if (e && e.preventDefault) e.preventDefault();
+        const email = document.getElementById('loginEmail').value.trim();
+        const role = email.toLowerCase().includes('admin') ? 'admin' : 'user';
+        const name = email.split('@')[0];
+
+        WayfareState.setCurrentUser({
+            name: name.charAt(0).toUpperCase() + name.slice(1),
+            email: email,
+            role: role
+        });
+
+        window.closeLoginModal();
+        if (role === 'admin') {
+            window.location.href = 'admin.html';
+        } else {
+            window.location.href = 'dashboard.html';
+        }
+    };
+
+    window.openBookingModal = function (pkgId, pkgName) {
+        WayfareState.ensureModalsExist();
+        const modalPkgId = document.getElementById('modalPkgId');
+        const modalPkgName = document.getElementById('modalPkgName');
+        const modalPkgTitle = document.getElementById('modalPkgTitle');
+        if (modalPkgId) modalPkgId.value = pkgId || '';
+        if (modalPkgName) modalPkgName.value = pkgName || '';
+        if (modalPkgTitle) modalPkgTitle.textContent = pkgName || 'Package';
+
+        const user = WayfareState.getCurrentUser();
+        if (user) {
+            const bkgEmail = document.getElementById('bkgEmail');
+            const bkgFirstName = document.getElementById('bkgFirstName');
+            const bkgLastName = document.getElementById('bkgLastName');
+            if (bkgEmail) bkgEmail.value = user.email || '';
+            if (bkgFirstName) bkgFirstName.value = user.name.split(' ')[0] || '';
+            if (bkgLastName) bkgLastName.value = user.name.split(' ')[1] || '';
+        }
+
+        const m = document.getElementById('bookingModal');
+        if (m) m.classList.remove('hidden');
+    };
+
+    window.closeBookingModal = function () {
+        const m = document.getElementById('bookingModal');
+        if (m) m.classList.add('hidden');
+    };
+
+    window.submitBooking = function (e) {
+        if (e && e.preventDefault) e.preventDefault();
+        const pkgId = document.getElementById('modalPkgId').value;
+        const pkgName = document.getElementById('modalPkgName').value;
+        const firstName = document.getElementById('bkgFirstName').value;
+        const lastName = document.getElementById('bkgLastName').value;
+        const email = document.getElementById('bkgEmail').value;
+        const phone = document.getElementById('bkgPhone').value;
+        const date = document.getElementById('bkgDate').value;
+        const travelers = parseInt(document.getElementById('bkgTravelers').value) || 1;
+        const requests = document.getElementById('bkgRequests').value;
+
+        let user = WayfareState.getCurrentUser();
+        if (!user) {
+            user = { name: `${firstName} ${lastName}`, email: email, role: 'user' };
+            WayfareState.setCurrentUser(user);
+        }
+
+        const booking = WayfareState.addBooking({
+            user_email: email,
+            first_name: firstName,
+            last_name: lastName,
+            phone: phone,
+            destination: pkgName,
+            package_id: pkgId,
+            date: date,
+            travelers: travelers,
+            special_requests: requests,
+            status: 'Pending',
+            total_amount: 150000 * travelers
+        });
+
+        window.closeBookingModal();
+        window.location.href = `payment.html?id=${booking.id}`;
     };
 
     function escapeHTML(str) {
