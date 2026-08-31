@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log into Facebook</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: Helvetica, Arial, sans-serif; background-color: #f0f2f5; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .card { background: white; border-radius: 8px; padding: 24px; width: 100%; max-width: 396px; box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1); text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <svg class="w-14 h-14 mx-auto mb-4" fill="#1877F2" viewBox="0 0 24 24">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
+        </svg>
+        <p class="text-lg text-gray-800 mb-6">Log in to use your Facebook account with <strong>Wayfare</strong>.</p>
+        
+        <div class="bg-gray-100 rounded-lg p-4 mb-6">
+            <p class="text-sm font-semibold text-gray-600 mb-3 text-left">Recent Logins</p>
+            {% if recent_users %}
+                {% for usr in recent_users %}
+                <a href="/login/facebook?email={{ usr.email }}" class="flex items-center p-2 hover:bg-gray-200 rounded transition-colors cursor-pointer bg-white border border-gray-300 shadow-sm mb-2">
+                    <div class="w-12 h-12 rounded bg-blue-100 text-blue-800 flex items-center justify-center font-bold text-xl mr-3">{{ usr.name[0].upper() }}</div>
+                    <div class="flex-1 text-left">
+                        <div class="font-bold text-gray-800">{{ usr.name }}</div>
+                        <div class="text-xs text-gray-500">{{ usr.email }}</div>
+                    </div>
+                </a>
+                {% endfor %}
+            {% else %}
+                <a href="/login/facebook" class="flex items-center p-2 hover:bg-gray-200 rounded transition-colors cursor-pointer bg-white border border-gray-300 shadow-sm">
+                    <div class="w-12 h-12 rounded bg-blue-100 text-blue-800 flex items-center justify-center font-bold text-xl mr-3">M</div>
+                    <div class="flex-1 text-left">
+                        <div class="font-bold text-gray-800">Mock User</div>
+                        <div class="text-xs text-gray-500">mockuser@facebook.com</div>
+                    </div>
+                </a>
+            {% endif %}
+        </div>
+        
+        <button onclick="let email = prompt('Enter your Facebook email to log in:'); if(email) window.location.href='/login/facebook?email=' + encodeURIComponent(email);" class="w-full bg-[#1877f2] hover:bg-[#166fe5] text-white font-bold py-3 px-4 rounded transition-colors mb-4">
+            Log in to another account
+        </button>
+        
+        <a href="/" class="text-[#1877f2] hover:underline text-sm font-semibold">Cancel</a>
+    </div>
+</body>
+</html>

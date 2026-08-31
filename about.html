@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>About Us - Wayfare Travel &amp; Tours</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Poppins:wght@600;700&amp;display=swap"
+    rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; }
+  </style>
+</head>
+
+<body class="bg-[#FAFBFC] text-[#2D3142]">
+  <!-- Navigation Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <nav class="flex items-center justify-between h-20">
+        <a href="index.html" class="flex items-center gap-2">
+          <svg class="w-10 h-10 text-[#FF6B35]" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path>
+          </svg>
+          <span class="text-2xl font-bold text-[#2D3142]">Wayfare</span>
+        </a>
+        <ul class="hidden md:flex items-center space-x-8 text-sm font-medium">
+          <li><a class="text-[#2D3142] hover:text-[#FF6B35] transition-colors" href="index.html">Home</a></li>
+          <li><a class="text-[#2D3142] hover:text-[#FF6B35] transition-colors" href="destinations.html">Destinations</a></li>
+          <li><a class="text-[#2D3142] hover:text-[#FF6B35] transition-colors" href="packages.html">Packages</a></li>
+          <li><a class="text-[#FF6B35] font-semibold" href="about.html">About</a></li>
+          <li><a class="text-[#2D3142] hover:text-[#FF6B35] transition-colors" href="contact.html">Contact</a></li>
+        </ul>
+        <div id="nav-user-area" class="flex items-center space-x-4"></div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative h-[55vh] flex items-center justify-center overflow-hidden">
+    <img alt="Our Story" class="absolute inset-0 w-full h-full object-cover"
+      src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&amp;h=1080&amp;fit=crop" />
+    <div class="absolute inset-0 bg-gradient-to-b from-[#1A1A2E]/70 to-[#1A1A2E]/90"></div>
+    <div class="relative z-10 text-center text-white px-6 max-w-4xl" data-aos="zoom-in">
+      <h1 class="text-4xl md:text-6xl font-bold mb-4">Our Story &amp; Mission</h1>
+      <p class="text-lg md:text-xl opacity-90 leading-relaxed">
+        Crafting unforgettable global travel experiences since 2010.
+      </p>
+    </div>
+  </section>
+
+  <!-- Story Section -->
+  <section class="py-20">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div data-aos="fade-right">
+          <span class="text-[#FF6B35] text-sm font-semibold uppercase tracking-wide">Our Journey</span>
+          <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-6 text-[#2D3142]">Turning Dreams Into Destinations</h2>
+          <p class="text-base leading-relaxed text-[#6B7280] mb-4">
+            Founded in 2010 by passionate adventurers, Wayfare started with a single dream: making world-class travel accessible, safe, and truly unforgettable for everyone.
+          </p>
+          <p class="text-base leading-relaxed text-[#6B7280] mb-4">
+            Over the past decade, we have empowered more than 50,000 travelers to explore 75+ countries. From private island escapes to high-altitude alpine treks, every itinerary is designed with precision and cultural respect.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-4" data-aos="fade-left">
+          <img alt="Travel Experience" class="w-full h-64 object-cover rounded-2xl shadow-md"
+            src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400&amp;h=500&amp;fit=crop" />
+          <img alt="Adventure" class="w-full h-64 object-cover rounded-2xl mt-8 shadow-md"
+            src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&amp;h=500&amp;fit=crop" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics -->
+  <section class="py-16 bg-gradient-to-br from-[#FF6B35] to-[#004E89]">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white" data-aos="fade-up">
+        <div>
+          <div class="text-4xl md:text-5xl font-bold mb-2">50K+</div>
+          <div class="text-sm opacity-90">Happy Travelers</div>
+        </div>
+        <div>
+          <div class="text-4xl md:text-5xl font-bold mb-2">75</div>
+          <div class="text-sm opacity-90">Countries Covered</div>
+        </div>
+        <div>
+          <div class="text-4xl md:text-5xl font-bold mb-2">13</div>
+          <div class="text-sm opacity-90">Years Experience</div>
+        </div>
+        <div>
+          <div class="text-4xl md:text-5xl font-bold mb-2">98%</div>
+          <div class="text-sm opacity-90">Satisfaction Rate</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[#2D3142] text-white py-12">
+    <div class="max-w-[1280px] mx-auto px-6 text-center text-sm text-gray-400">
+      <p>&copy; 2026 Wayfare. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="static/js/app-state.js"></script>
+  <script src="static/js/chatbot.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+  </script>
+</body>
+
+</html>

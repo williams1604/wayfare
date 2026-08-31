@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Wayfare - Premium Travel &amp; Tours</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Poppins:wght@600;700&amp;display=swap"
+    rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
+</head>
+
+<body class="bg-[#FAFBFC] text-[#2D3142]">
+  <!-- Navigation Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <nav class="flex items-center justify-between h-20">
+        <a href="index.html" class="flex items-center gap-2">
+          <svg class="w-10 h-10 text-[#FF6B35]" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z">
+            </path>
+          </svg>
+          <span class="text-2xl font-bold text-[#2D3142]">Wayfare</span>
+        </a>
+        <ul class="hidden md:flex items-center space-x-8 text-sm font-medium">
+          <li><a class="text-[#FF6B35] font-semibold" href="index.html">Home</a></li>
+          <li><a class="text-[#2D3142] hover:text-[#FF6B35] transition-colors" href="destinations.html">Destinations</a></li>
+          <li><a class="text-[#2D3142] hover:text-[#FF6B35] transition-colors" href="packages.html">Packages</a></li>
+          <li><a class="text-[#2D3142] hover:text-[#FF6B35] transition-colors" href="about.html">About</a></li>
+          <li><a class="text-[#2D3142] hover:text-[#FF6B35] transition-colors" href="contact.html">Contact</a></li>
+        </ul>
+        <div id="nav-user-area" class="flex items-center space-x-4">
+          <button onclick="openLoginModal()"
+            class="hidden md:block px-7 py-3.5 text-sm font-medium text-[#FF6B35] border-2 border-[#FF6B35] rounded-lg hover:bg-[#FF6B35] hover:text-white transition-colors">
+            Login
+          </button>
+          <a href="packages.html" class="px-7 py-3.5 text-sm font-medium text-white bg-[#FF6B35] rounded-lg hover:bg-[#e55a2b] transition-colors shadow-md">
+            Book Now
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative h-[85vh] flex items-center justify-center overflow-hidden">
+    <img alt="Hero Travel Background" class="absolute inset-0 w-full h-full object-cover"
+      src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&amp;h=1080&amp;fit=crop" />
+    <div class="absolute inset-0 bg-gradient-to-r from-[#1A1A2E]/90 to-[#1A1A2E]/40"></div>
+    <div class="relative z-10 text-center text-white px-6 max-w-4xl" data-aos="zoom-in" data-aos-duration="1000">
+      <span class="inline-block px-4 py-1.5 bg-[#FF6B35]/20 text-[#FF6B35] border border-[#FF6B35]/40 rounded-full text-sm font-semibold tracking-wide uppercase mb-6 backdrop-blur-md">
+        Explore The World With Wayfare
+      </span>
+      <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-6" style="letter-spacing: -1px;">
+        Unforgettable Journeys, Curated For You
+      </h1>
+      <p class="text-lg md:text-2xl leading-relaxed opacity-90 mb-10 max-w-2xl mx-auto font-light">
+        Discover handpicked global destinations, luxury holiday packages, and seamless travel experiences.
+      </p>
+      
+      <!-- Quick Search Form -->
+      <div class="bg-white/10 backdrop-blur-md border border-white/20 p-4 md:p-6 rounded-2xl shadow-2xl max-w-3xl mx-auto flex flex-col md:flex-row items-center gap-4">
+        <div class="flex-1 w-full text-left">
+          <label class="block text-xs text-white/80 font-medium mb-1">Destination</label>
+          <select id="heroDestSelect" class="w-full bg-white text-[#2D3142] px-4 py-3 rounded-xl focus:outline-none font-medium text-sm">
+            <option value="">All Destinations</option>
+            <option value="Switzerland">Swiss Alps, Switzerland</option>
+            <option value="Japan">Kyoto & Tokyo, Japan</option>
+            <option value="Italy">Amalfi Coast, Italy</option>
+            <option value="Greece">Santorini, Greece</option>
+            <option value="Indonesia">Bali, Indonesia</option>
+            <option value="UAE">Dubai, UAE</option>
+          </select>
+        </div>
+        <div class="flex-1 w-full text-left">
+          <label class="block text-xs text-white/80 font-medium mb-1">Travel Date</label>
+          <input type="date" id="heroDateInput" class="w-full bg-white text-[#2D3142] px-4 py-3 rounded-xl focus:outline-none font-medium text-sm" />
+        </div>
+        <button onclick="handleHeroSearch()" class="w-full md:w-auto px-8 py-3.5 bg-[#FF6B35] text-white font-bold text-sm rounded-xl hover:bg-[#e55a2b] transition-all shadow-lg shadow-[#FF6B35]/30 self-end">
+          Search Trips
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Destinations -->
+  <section class="py-20">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12" data-aos="fade-up">
+        <div>
+          <span class="text-[#FF6B35] font-semibold text-sm uppercase tracking-wider">Top Destinations</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-[#2D3142] mt-2">Explore World-Class Places</h2>
+        </div>
+        <a href="destinations.html" class="mt-4 md:mt-0 text-[#FF6B35] font-semibold text-sm hover:underline flex items-center gap-1">
+          View All Destinations &rarr;
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" data-aos="fade-up" data-aos-delay="100">
+        <!-- Card 1 -->
+        <div class="group relative rounded-2xl overflow-hidden shadow-lg h-96 cursor-pointer" onclick="location.href='packages.html?dest=Switzerland'">
+          <img src="https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?w=600&h=800&fit=crop" alt="Switzerland" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-6 left-6 right-6 text-white">
+            <span class="px-3 py-1 bg-[#FF6B35] text-xs font-semibold rounded-full mb-2 inline-block">7 Packages</span>
+            <h3 class="text-2xl font-bold">Swiss Alps, Switzerland</h3>
+            <p class="text-sm opacity-90 mt-1">Majestic peaks, crystal lakes &amp; alpine adventure.</p>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="group relative rounded-2xl overflow-hidden shadow-lg h-96 cursor-pointer" onclick="location.href='packages.html?dest=Japan'">
+          <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=600&h=800&fit=crop" alt="Japan" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-6 left-6 right-6 text-white">
+            <span class="px-3 py-1 bg-[#FF6B35] text-xs font-semibold rounded-full mb-2 inline-block">5 Packages</span>
+            <h3 class="text-2xl font-bold">Kyoto &amp; Tokyo, Japan</h3>
+            <p class="text-sm opacity-90 mt-1">Cherry blossoms, ancient temples &amp; neon lights.</p>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="group relative rounded-2xl overflow-hidden shadow-lg h-96 cursor-pointer" onclick="location.href='packages.html?dest=Italy'">
+          <img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?w=600&h=800&fit=crop" alt="Italy" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-6 left-6 right-6 text-white">
+            <span class="px-3 py-1 bg-[#FF6B35] text-xs font-semibold rounded-full mb-2 inline-block">6 Packages</span>
+            <h3 class="text-2xl font-bold">Amalfi Coast, Italy</h3>
+            <p class="text-sm opacity-90 mt-1">Cliffside luxury, azure waters &amp; finest cuisine.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Packages -->
+  <section class="py-20 bg-white">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <span class="text-[#FF6B35] font-semibold text-sm uppercase tracking-wider">Handpicked Packages</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-[#2D3142] mt-2">Popular Holiday Packages</h2>
+        <p class="text-[#6B7280] mt-3 max-w-xl mx-auto">All-inclusive travel itineraries tailored for couples, families, and solo adventurers.</p>
+      </div>
+
+      <div id="homePackagesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" data-aos="fade-up">
+        <!-- Rendered dynamically via JS -->
+      </div>
+
+      <div class="text-center mt-12">
+        <a href="packages.html" class="inline-block px-8 py-4 bg-[#004E89] text-white font-bold text-sm rounded-xl hover:bg-[#003865] transition-colors shadow-lg">
+          Browse All Holiday Packages
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section class="py-20 bg-[#FAFBFC]">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="grid lg:grid-cols-3 gap-8" data-aos="fade-up">
+        <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+          <div class="w-14 h-14 bg-[#FF6B35]/10 rounded-2xl flex items-center justify-center mb-6 text-[#FF6B35]">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-[#2D3142] mb-3">100% Verified Trips</h3>
+          <p class="text-[#6B7280] text-sm leading-relaxed">Certified local guides, vetted 5-star hotels, and transparent pricing guarantee peace of mind.</p>
+        </div>
+        <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+          <div class="w-14 h-14 bg-[#004E89]/10 rounded-2xl flex items-center justify-center mb-6 text-[#004E89]">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-[#2D3142] mb-3">24/7 Travel Concierge</h3>
+          <p class="text-[#6B7280] text-sm leading-relaxed">Our global support hotline and AI concierge are active 24/7 throughout your trip.</p>
+        </div>
+        <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+          <div class="w-14 h-14 bg-[#06D6A0]/10 rounded-2xl flex items-center justify-center mb-6 text-[#06D6A0]">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-[#2D3142] mb-3">Best Price Guarantee</h3>
+          <p class="text-[#6B7280] text-sm leading-relaxed">We match any legitimate lower package price, ensuring supreme value for every rupee spent.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[#2D3142] text-white py-16">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="grid md:grid-cols-4 gap-12 mb-12">
+        <div>
+          <div class="text-2xl font-bold text-[#FF6B35] mb-4">Wayfare</div>
+          <p class="text-sm text-gray-400 leading-relaxed mb-4">
+            Creating unforgettable travel experiences since 2010. Your adventure starts here.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-3 text-sm text-gray-400">
+            <li><a href="about.html" class="hover:text-white transition-colors">About Us</a></li>
+            <li><a href="destinations.html" class="hover:text-white transition-colors">Destinations</a></li>
+            <li><a href="packages.html" class="hover:text-white transition-colors">Travel Packages</a></li>
+            <li><a href="contact.html" class="hover:text-white transition-colors">Contact Support</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Support</h4>
+          <ul class="space-y-3 text-sm text-gray-400">
+            <li><a href="contact.html" class="hover:text-white transition-colors">Help Center</a></li>
+            <li><a href="contact.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+            <li><a href="contact.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+          <ul class="space-y-3 text-sm text-gray-400">
+            <li>San Francisco, CA 94102</li>
+            <li>info@wayfare.com</li>
+            <li>+1 (555) 123-4567</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 pt-8 text-center text-sm text-gray-400">
+        <p>&copy; 2026 Wayfare Travel &amp; Tours. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Booking Modal -->
+  <div id="bookingModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeBookingModal()"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden p-6 z-10">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-xl font-bold text-[#2D3142]">Book <span id="modalPkgTitle" class="text-[#FF6B35]"></span></h3>
+        <button onclick="closeBookingModal()" class="text-gray-400 hover:text-gray-600">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <form id="bookingForm" onsubmit="submitBooking(event)" class="space-y-4">
+        <input type="hidden" id="modalPkgId" />
+        <input type="hidden" id="modalPkgName" />
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">First Name</label>
+            <input type="text" id="bkgFirstName" required class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="John" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Last Name</label>
+            <input type="text" id="bkgLastName" required class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="Doe" />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Email</label>
+            <input type="email" id="bkgEmail" required class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="john@example.com" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Phone</label>
+            <input type="tel" id="bkgPhone" required class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="+1 (555) 123-4567" />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Travel Date</label>
+            <input type="date" id="bkgDate" required class="w-full px-3 py-2 border rounded-lg text-sm" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Travelers</label>
+            <input type="number" id="bkgTravelers" min="1" max="20" value="2" required class="w-full px-3 py-2 border rounded-lg text-sm" />
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Special Requests</label>
+          <textarea id="bkgRequests" rows="2" class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="Meal preferences, honeymoon, room type..."></textarea>
+        </div>
+        <button type="submit" class="w-full bg-[#FF6B35] text-white font-bold py-3.5 rounded-xl hover:bg-[#e55a2b] transition-colors shadow-lg">
+          Proceed to Payment &rarr;
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeLoginModal()"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden p-6 z-10">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-bold text-[#2D3142]">Sign In</h3>
+        <button onclick="closeLoginModal()" class="text-gray-400 hover:text-gray-600">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <form id="loginForm" onsubmit="submitLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Email</label>
+          <input type="email" id="loginEmail" required class="w-full px-4 py-3 border rounded-xl text-sm" placeholder="john@example.com / admin@wayfare.com" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Password</label>
+          <input type="password" id="loginPassword" required class="w-full px-4 py-3 border rounded-xl text-sm" placeholder="••••••••" />
+        </div>
+        <button type="submit" class="w-full bg-[#FF6B35] text-white font-bold py-3.5 rounded-xl hover:bg-[#e55a2b] transition-colors shadow-lg">
+          Sign In
+        </button>
+        <p class="text-center text-xs text-gray-500 mt-4">
+          Demo Admin: <span class="font-semibold text-gray-700">admin@wayfare.com</span> (Pass: admin123)
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <script src="static/js/app-state.js"></script>
+  <script src="static/js/chatbot.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+
+    function renderHomePackages() {
+      const pkgs = WayfareState.getPackages().slice(0, 6);
+      const grid = document.getElementById('homePackagesGrid');
+      if (!grid) return;
+
+      grid.innerHTML = pkgs.map(p => `
+        <div class="bg-white rounded-2xl overflow-hidden shadow-md border border-gray-100 hover:shadow-xl transition-all flex flex-col">
+          <div class="relative h-56">
+            <img src="${p.image_url}" alt="${p.name}" class="w-full h-full object-cover" />
+            <span class="absolute top-4 right-4 bg-[#FF6B35] text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+              ₹${Number(p.price).toLocaleString('en-IN')}
+            </span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-1 text-yellow-500 text-xs font-semibold mb-1">
+                ★ ${p.rating} (${p.reviews_count || 50} reviews)
+              </div>
+              <h3 class="text-xl font-bold text-[#2D3142] mb-2">${p.name}</h3>
+              <p class="text-xs text-gray-500 mb-4 line-clamp-2">${p.description}</p>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+              <span class="text-xs text-gray-400 font-medium">${p.duration}</span>
+              <button onclick="openBookingModal(${p.id}, '${p.name.replace(/'/g, "\\'")}')" class="px-5 py-2 bg-[#FF6B35] text-white text-xs font-bold rounded-lg hover:bg-[#e55a2b] transition-colors">
+                Book Now
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function handleHeroSearch() {
+      const dest = document.getElementById('heroDestSelect').value;
+      if (dest) {
+        window.location.href = `packages.html?dest=${encodeURIComponent(dest)}`;
+      } else {
+        window.location.href = 'packages.html';
+      }
+    }
+
+    function openBookingModal(pkgId, pkgName) {
+      document.getElementById('modalPkgId').value = pkgId;
+      document.getElementById('modalPkgName').value = pkgName;
+      document.getElementById('modalPkgTitle').textContent = pkgName;
+
+      const user = WayfareState.getCurrentUser();
+      if (user) {
+        document.getElementById('bkgEmail').value = user.email || '';
+        document.getElementById('bkgFirstName').value = user.name.split(' ')[0] || '';
+        document.getElementById('bkgLastName').value = user.name.split(' ')[1] || '';
+      }
+
+      document.getElementById('bookingModal').classList.remove('hidden');
+    }
+
+    function closeBookingModal() {
+      document.getElementById('bookingModal').classList.add('hidden');
+    }
+
+    function submitBooking(e) {
+      e.preventDefault();
+      const pkgId = document.getElementById('modalPkgId').value;
+      const pkgName = document.getElementById('modalPkgName').value;
+      const firstName = document.getElementById('bkgFirstName').value;
+      const lastName = document.getElementById('bkgLastName').value;
+      const email = document.getElementById('bkgEmail').value;
+      const phone = document.getElementById('bkgPhone').value;
+      const date = document.getElementById('bkgDate').value;
+      const travelers = parseInt(document.getElementById('bkgTravelers').value) || 1;
+      const requests = document.getElementById('bkgRequests').value;
+
+      let user = WayfareState.getCurrentUser();
+      if (!user) {
+        user = { name: `${firstName} ${lastName}`, email: email, role: 'user' };
+        WayfareState.setCurrentUser(user);
+      }
+
+      const booking = WayfareState.addBooking({
+        user_email: email,
+        first_name: firstName,
+        last_name: lastName,
+        phone: phone,
+        destination: pkgName,
+        package_id: pkgId,
+        date: date,
+        travelers: travelers,
+        special_requests: requests,
+        status: 'Pending',
+        total_amount: 150000 * travelers
+      });
+
+      closeBookingModal();
+      window.location.href = `payment.html?id=${booking.id}`;
+    }
+
+    function openLoginModal() {
+      document.getElementById('loginModal').classList.remove('hidden');
+    }
+
+    function closeLoginModal() {
+      document.getElementById('loginModal').classList.add('hidden');
+    }
+
+    function submitLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const role = email.toLowerCase().includes('admin') ? 'admin' : 'user';
+      const name = email.split('@')[0];
+
+      WayfareState.setCurrentUser({
+        name: name.charAt(0).toUpperCase() + name.slice(1),
+        email: email,
+        role: role
+      });
+
+      closeLoginModal();
+      if (role === 'admin') {
+        window.location.href = 'admin.html';
+      } else {
+        window.location.href = 'dashboard.html';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderHomePackages();
+    });
+  </script>
+</body>
+
+</html>

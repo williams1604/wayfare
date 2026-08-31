@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Confirmation Receipt - Wayfare</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; }
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white !important; }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen py-12 px-4">
+  <div class="max-w-2xl mx-auto">
+    <!-- Action buttons -->
+    <div class="no-print mb-6 flex justify-between items-center">
+      <a href="dashboard.html" class="text-sm font-semibold text-[#FF6B35] hover:underline">&larr; Back to Dashboard</a>
+      <button onclick="window.print()" class="px-5 py-2.5 bg-[#FF6B35] text-white text-sm font-bold rounded-xl shadow-md hover:bg-[#e55a2b]">
+        Print Receipt PDF
+      </button>
+    </div>
+
+    <!-- Receipt Card -->
+    <div class="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
+      <!-- Header -->
+      <div class="flex justify-between items-start pb-6 border-b border-gray-100">
+        <div>
+          <div class="flex items-center gap-2 text-[#FF6B35] mb-2">
+            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path>
+            </svg>
+            <span class="text-2xl font-bold text-[#2D3142]">Wayfare</span>
+          </div>
+          <p class="text-xs text-gray-400">Wayfare Travel &amp; Tourism LLC</p>
+        </div>
+        <div class="text-right">
+          <span class="inline-block px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full mb-2">PAYMENT CONFIRMED</span>
+          <p class="text-xs text-gray-400" id="receiptDate"></p>
+        </div>
+      </div>
+
+      <!-- Details Grid -->
+      <div class="py-8 grid grid-cols-2 gap-6 text-sm">
+        <div>
+          <span class="text-xs text-gray-400 uppercase tracking-wider block mb-1">Customer Name</span>
+          <p class="font-bold text-gray-800" id="rcptCustomer"></p>
+        </div>
+        <div>
+          <span class="text-xs text-gray-400 uppercase tracking-wider block mb-1">Booking Reference</span>
+          <p class="font-bold text-gray-800" id="rcptBookingId"></p>
+        </div>
+        <div>
+          <span class="text-xs text-gray-400 uppercase tracking-wider block mb-1">Package Destination</span>
+          <p class="font-bold text-gray-800" id="rcptDest"></p>
+        </div>
+        <div>
+          <span class="text-xs text-gray-400 uppercase tracking-wider block mb-1">Travel Date</span>
+          <p class="font-bold text-gray-800" id="rcptTravelDate"></p>
+        </div>
+        <div>
+          <span class="text-xs text-gray-400 uppercase tracking-wider block mb-1">Payment Method</span>
+          <p class="font-bold text-gray-800" id="rcptMethod"></p>
+        </div>
+        <div>
+          <span class="text-xs text-gray-400 uppercase tracking-wider block mb-1">Transaction ID</span>
+          <p class="font-bold text-gray-800 font-mono" id="rcptTxnId"></p>
+        </div>
+      </div>
+
+      <!-- Amount Box -->
+      <div class="bg-[#FAFBFC] p-6 rounded-2xl border border-gray-100 flex justify-between items-center mb-6">
+        <div>
+          <span class="text-xs text-gray-500 font-medium">Total Amount Paid</span>
+          <p class="text-xs text-gray-400">Includes all taxes and booking fees</p>
+        </div>
+        <div class="text-2xl font-bold text-[#FF6B35]" id="rcptAmount"></div>
+      </div>
+
+      <!-- Footer Note -->
+      <div class="text-center pt-4 border-t border-gray-100 text-xs text-gray-400">
+        <p>Thank you for choosing Wayfare. Have a wonderful and safe journey!</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="static/js/app-state.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+
+      const bookings = WayfareState.getBookings();
+      const b = bookings.find(item => item.id == id) || bookings[0];
+
+      if (b) {
+        document.getElementById('rcptCustomer').textContent = b.first_name ? `${b.first_name} ${b.last_name}` : b.user_email;
+        document.getElementById('rcptBookingId').textContent = '#' + b.id;
+        document.getElementById('rcptDest').textContent = b.destination;
+        document.getElementById('rcptTravelDate').textContent = b.date;
+        document.getElementById('rcptMethod').textContent = b.payment_method || 'Credit Card';
+        document.getElementById('rcptTxnId').textContent = b.transaction_id || 'TXN-884920';
+        const amt = b.total_amount || 185000;
+        document.getElementById('rcptAmount').textContent = `₹${Number(amt).toLocaleString('en-IN')}`;
+        document.getElementById('receiptDate').textContent = b.created_at || new Date().toISOString().split('T')[0];
+      }
+    });
+  </script>
+</body>
+
+</html>

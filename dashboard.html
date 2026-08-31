@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Dashboard - Wayfare</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; }
+  </style>
+</head>
+
+<body class="bg-[#FAFBFC] text-[#2D3142]">
+  <!-- Navigation Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <nav class="flex items-center justify-between h-20">
+        <a href="index.html" class="flex items-center gap-2">
+          <svg class="w-10 h-10 text-[#FF6B35]" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path>
+          </svg>
+          <span class="text-2xl font-bold text-[#2D3142]">Wayfare</span>
+        </a>
+        <div id="nav-user-area" class="flex items-center space-x-4"></div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-[1280px] mx-auto px-6 py-12" data-aos="fade-up">
+    <!-- Bookings Section -->
+    <h1 class="text-3xl font-bold mb-8">My Bookings</h1>
+    <div id="bookingsContainer"></div>
+
+    <!-- Enquiries Section -->
+    <h1 class="text-3xl font-bold mb-8 mt-16">My Enquiries</h1>
+    <div id="enquiriesContainer"></div>
+  </main>
+
+  <!-- Review Modal -->
+  <div id="reviewModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeReviewModal()"></div>
+    <div class="relative bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden p-6 z-10">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-xl font-bold text-[#2D3142]">Rate Trip to <span id="reviewPackageName" class="text-[#FF6B35]"></span></h3>
+        <button onclick="closeReviewModal()" class="text-gray-400 hover:text-gray-600">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <form onsubmit="submitReview(event)" class="space-y-6">
+        <input type="hidden" id="reviewPkgId" />
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Rating</label>
+          <div class="flex items-center gap-2" id="starContainer">
+            <button type="button" onclick="setRating(1)" class="star-btn text-gray-300 text-2xl">★</button>
+            <button type="button" onclick="setRating(2)" class="star-btn text-gray-300 text-2xl">★</button>
+            <button type="button" onclick="setRating(3)" class="star-btn text-gray-300 text-2xl">★</button>
+            <button type="button" onclick="setRating(4)" class="star-btn text-gray-300 text-2xl">★</button>
+            <button type="button" onclick="setRating(5)" class="star-btn text-gray-300 text-2xl">★</button>
+          </div>
+          <input type="hidden" id="ratingInput" required value="5" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Your Feedback</label>
+          <textarea id="reviewComment" rows="4" required class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6B35]" placeholder="Tell us about your experience..."></textarea>
+        </div>
+        <button type="submit" class="w-full bg-[#FF6B35] text-white font-bold py-3.5 rounded-xl hover:bg-[#e55a2b] transition-colors shadow-lg">
+          Submit Review
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="bg-[#2D3142] text-white py-12 mt-20">
+    <div class="max-w-[1280px] mx-auto px-6 text-center text-sm text-gray-400">
+      <p>&copy; 2026 Wayfare. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="static/js/app-state.js"></script>
+  <script src="static/js/chatbot.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+
+    let currentRating = 5;
+
+    function renderDashboard() {
+      const user = WayfareState.getCurrentUser();
+      if (!user) {
+        // Mock default demo user if not logged in
+        WayfareState.setCurrentUser({ name: "John Doe", email: "john@example.com", role: "user" });
+      }
+      const currentUser = WayfareState.getCurrentUser();
+
+      // Render Bookings
+      const bookings = WayfareState.getBookings(currentUser.email);
+      const bContainer = document.getElementById('bookingsContainer');
+
+      if (!bookings.length) {
+        bContainer.innerHTML = `
+          <div class="bg-white rounded-xl shadow-sm p-12 text-center border border-gray-100">
+            <h3 class="text-xl font-medium text-gray-900 mb-2">No bookings yet</h3>
+            <p class="text-gray-500 mb-6">You haven't made any bookings yet.</p>
+            <a href="packages.html" class="px-6 py-3 bg-[#FF6B35] text-white rounded-lg font-medium hover:bg-[#e55a2b] transition-colors">Browse Packages</a>
+          </div>
+        `;
+      } else {
+        bContainer.innerHTML = `
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead class="bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase">
+                <tr>
+                  <th class="px-6 py-4">Destination</th>
+                  <th class="px-6 py-4">Date</th>
+                  <th class="px-6 py-4">Status</th>
+                  <th class="px-6 py-4">Booking ID</th>
+                  <th class="px-6 py-4">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 text-sm">
+                ${bookings.map(b => `
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 font-medium text-[#2D3142]">${b.destination}</td>
+                    <td class="px-6 py-4 text-gray-600">${b.date}</td>
+                    <td class="px-6 py-4">
+                      <span class="px-3 py-1 text-xs font-medium rounded-full ${getStatusBadgeClass(b.status)}">
+                        ${b.status}
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 text-gray-400">#${b.id}</td>
+                    <td class="px-6 py-4 flex items-center gap-3">
+                      ${b.status === 'Confirmed' ? `<a href="receipt.html?id=${b.id}" class="text-green-600 font-semibold hover:underline">Receipt</a>` : ''}
+                      ${b.status === 'Pending' ? `<a href="payment.html?id=${b.id}" class="text-white bg-[#FF6B35] px-3 py-1 rounded text-xs font-semibold hover:bg-[#e55a2b]">Pay Now</a>` : ''}
+                      ${b.status !== 'Cancelled' ? `<button onclick="cancelBooking(${b.id})" class="text-red-600 hover:underline">Cancel</button>` : '<span class="text-gray-400">Cancelled</span>'}
+                      ${b.status === 'Confirmed' ? `<button onclick="openReviewModal('${b.destination.replace(/'/g, "\\'")}', ${b.package_id || 1})" class="text-yellow-600 font-semibold hover:underline">Rate</button>` : ''}
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      // Render Enquiries
+      const enquiries = WayfareState.getEnquiries(currentUser.email);
+      const eContainer = document.getElementById('enquiriesContainer');
+
+      if (!enquiries.length) {
+        eContainer.innerHTML = `<div class="bg-white rounded-xl shadow-sm p-8 text-center text-gray-500 border border-gray-100">You haven't submitted any enquiries yet.</div>`;
+      } else {
+        eContainer.innerHTML = `
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead class="bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase">
+                <tr>
+                  <th class="px-6 py-4">Subject</th>
+                  <th class="px-6 py-4">Message</th>
+                  <th class="px-6 py-4">Status</th>
+                  <th class="px-6 py-4">Response</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 text-sm">
+                ${enquiries.map(e => `
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 font-medium text-[#2D3142]">${e.subject}</td>
+                    <td class="px-6 py-4 text-gray-600">${e.message}</td>
+                    <td class="px-6 py-4">
+                      <span class="px-3 py-1 text-xs font-medium rounded-full ${e.status === 'Responded' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}">
+                        ${e.status}
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 text-gray-600">${e.response || '<span class="text-gray-400 italic">Waiting...</span>'}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+    }
+
+    function getStatusBadgeClass(status) {
+      if (status === 'Confirmed') return 'bg-green-100 text-green-700';
+      if (status === 'Validation Pending') return 'bg-blue-100 text-blue-700';
+      if (status === 'Pending') return 'bg-yellow-100 text-yellow-700';
+      if (status === 'Cancelled') return 'bg-red-100 text-red-700';
+      return 'bg-gray-100 text-gray-700';
+    }
+
+    function cancelBooking(id) {
+      if (confirm('Are you sure you want to cancel this booking?')) {
+        WayfareState.updateBookingStatus(id, 'Cancelled');
+        renderDashboard();
+      }
+    }
+
+    function openReviewModal(name, pkgId) {
+      document.getElementById('reviewPackageName').textContent = name;
+      document.getElementById('reviewPkgId').value = pkgId;
+      setRating(5);
+      document.getElementById('reviewModal').classList.remove('hidden');
+    }
+
+    function closeReviewModal() {
+      document.getElementById('reviewModal').classList.add('hidden');
+    }
+
+    function setRating(val) {
+      currentRating = val;
+      document.getElementById('ratingInput').value = val;
+      const btns = document.querySelectorAll('.star-btn');
+      btns.forEach((btn, idx) => {
+        btn.className = idx < val ? 'star-btn text-yellow-400 text-2xl' : 'star-btn text-gray-300 text-2xl';
+      });
+    }
+
+    function submitReview(e) {
+      e.preventDefault();
+      const user = WayfareState.getCurrentUser();
+      WayfareState.addReview({
+        user_name: user.name,
+        user_email: user.email,
+        package_id: document.getElementById('reviewPkgId').value,
+        package_name: document.getElementById('reviewPackageName').textContent,
+        rating: currentRating,
+        comment: document.getElementById('reviewComment').value
+      });
+
+      closeReviewModal();
+      alert('Thank you for your feedback! Your review has been submitted for admin approval.');
+    }
+
+    document.addEventListener('DOMContentLoaded', renderDashboard);
+  </script>
+</body>
+
+</html>

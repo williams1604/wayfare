@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Package - Wayfare Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white shadow-md flex-shrink-0 hidden md:flex flex-col">
+            <div class="p-6 border-b border-gray-100">
+                <div class="flex items-center gap-2 text-[#FF6B35]">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z">
+                        </path>
+                    </svg>
+                    <span class="text-xl font-bold">Wayfare Admin</span>
+                </div>
+            </div>
+            <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+                <a href="/admin"
+                    class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                        </path>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="/admin/bookings"
+                    class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                        </path>
+                    </svg>
+                    Bookings
+                </a>
+                <a href="/admin/packages/add"
+                    class="flex items-center gap-3 px-4 py-3 text-[#FF6B35] bg-orange-50 rounded-lg font-medium transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Add Package
+                </a>
+                <a href="/"
+                    class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Back to Site
+                </a>
+                <a href="/logout"
+                    class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors mt-auto">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                        </path>
+                    </svg>
+                    Logout
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto p-8">
+            <header class="flex items-center justify-between mb-8">
+                <h1 class="text-3xl font-bold text-gray-800">Add New Package</h1>
+                <div class="flex items-center gap-4">
+                    <div class="text-right">
+                        <div class="text-sm font-medium text-gray-900">{{ session.name }}</div>
+                        <div class="text-xs text-gray-500">Administrator</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 max-w-3xl">
+                <form action="/admin/packages/add" method="POST" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Package Name</label>
+                            <input type="text" name="name" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#FF6B35] focus:border-[#FF6B35]">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Price (₹)</label>
+                            <input type="number" name="price" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#FF6B35] focus:border-[#FF6B35]">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Duration</label>
+                            <input type="text" name="duration" placeholder="e.g. 5 Days" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#FF6B35] focus:border-[#FF6B35]">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Rating</label>
+                            <input type="number" step="0.1" max="5" name="rating" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#FF6B35] focus:border-[#FF6B35]">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
+                        <input type="url" name="image_url" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#FF6B35] focus:border-[#FF6B35]">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                        <textarea name="description" rows="4" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#FF6B35] focus:border-[#FF6B35]"></textarea>
+                    </div>
+
+                    <div class="flex items-center gap-6">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" name="is_bestseller"
+                                class="w-5 h-5 text-[#FF6B35] rounded focus:ring-[#FF6B35]">
+                            <span class="text-sm text-gray-700">Mark as Bestseller</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" name="is_premium"
+                                class="w-5 h-5 text-[#FF6B35] rounded focus:ring-[#FF6B35]">
+                            <span class="text-sm text-gray-700">Mark as Premium</span>
+                        </label>
+                    </div>
+
+                    <div class="flex justify-end pt-4">
+                        <button type="submit"
+                            class="px-6 py-3 bg-[#FF6B35] text-white font-medium rounded-lg hover:bg-[#e55a2b] transition-colors shadow-sm">
+                            Add Package
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

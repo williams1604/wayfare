@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Payment Gateway - Wayfare</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Poppins:wght@600;700&amp;display=swap"
+    rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; }
+  </style>
+</head>
+
+<body class="bg-[#FAFBFC] text-[#2D3142]">
+  <!-- Navigation Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <nav class="flex items-center justify-between h-20">
+        <a href="index.html" class="flex items-center gap-2">
+          <svg class="w-10 h-10 text-[#FF6B35]" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path>
+          </svg>
+          <span class="text-2xl font-bold text-[#2D3142]">Wayfare</span>
+        </a>
+        <span class="text-sm font-semibold text-gray-500">Secure Payment Checkout</span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-6 py-12">
+    <div id="paymentContent" class="grid md:grid-cols-3 gap-8">
+      <!-- Summary Card -->
+      <div class="md:col-span-1 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-fit">
+        <h3 class="font-bold text-lg mb-4 pb-2 border-b border-gray-100">Booking Summary</h3>
+        <div class="space-y-3 text-sm">
+          <div>
+            <span class="text-xs text-gray-400 block">Package</span>
+            <span id="summaryDest" class="font-semibold text-gray-800"></span>
+          </div>
+          <div>
+            <span class="text-xs text-gray-400 block">Travel Date</span>
+            <span id="summaryDate" class="font-semibold text-gray-800"></span>
+          </div>
+          <div>
+            <span class="text-xs text-gray-400 block">Travelers</span>
+            <span id="summaryTravelers" class="font-semibold text-gray-800"></span>
+          </div>
+          <div class="pt-4 border-t border-gray-100 flex justify-between items-center">
+            <span class="font-bold text-gray-700">Total Amount</span>
+            <span id="summaryAmount" class="font-bold text-xl text-[#FF6B35]"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Method Form -->
+      <div class="md:col-span-2 bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+        <h2 class="text-2xl font-bold mb-6">Select Payment Method</h2>
+
+        <div class="flex gap-3 mb-8">
+          <button onclick="switchTab('card')" id="tabCard" class="flex-1 py-3 px-4 border-2 border-[#FF6B35] bg-[#FF6B35]/10 text-[#FF6B35] font-bold rounded-xl text-sm">Card</button>
+          <button onclick="switchTab('upi')" id="tabUpi" class="flex-1 py-3 px-4 border-2 border-gray-200 text-gray-600 font-bold rounded-xl text-sm">UPI / QR</button>
+          <button onclick="switchTab('net')" id="tabNet" class="flex-1 py-3 px-4 border-2 border-gray-200 text-gray-600 font-bold rounded-xl text-sm">Net Banking</button>
+        </div>
+
+        <!-- Card Form -->
+        <form id="formCard" onsubmit="processPayment(event, 'Credit Card')" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Cardholder Name</label>
+            <input type="text" required class="w-full px-4 py-3 border rounded-xl text-sm" placeholder="John Doe" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Card Number</label>
+            <input type="text" required maxlength="19" class="w-full px-4 py-3 border rounded-xl text-sm" placeholder="4532 •••• •••• 8921" />
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-gray-600 mb-1">Expiry Date</label>
+              <input type="text" required placeholder="MM/YY" class="w-full px-4 py-3 border rounded-xl text-sm" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600 mb-1">CVV</label>
+              <input type="password" required maxlength="4" placeholder="•••" class="w-full px-4 py-3 border rounded-xl text-sm" />
+            </div>
+          </div>
+          <button type="submit" class="w-full mt-6 bg-[#FF6B35] text-white font-bold py-4 rounded-xl hover:bg-[#e55a2b] transition-colors shadow-lg">
+            Pay &amp; Confirm Booking
+          </button>
+        </form>
+
+        <!-- UPI Form -->
+        <form id="formUpi" onsubmit="processPayment(event, 'UPI / QR')" class="hidden space-y-6 text-center">
+          <div class="p-6 bg-gray-50 rounded-2xl border border-dashed border-gray-300 inline-block">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=wayfare@upi&pn=WayfareTravel" alt="UPI QR" class="mx-auto rounded-lg shadow-sm" />
+            <p class="text-xs text-gray-500 mt-3">Scan with Google Pay, PhonePe, or Paytm</p>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1 text-left">Or enter UPI ID</label>
+            <input type="text" placeholder="username@upi" class="w-full px-4 py-3 border rounded-xl text-sm" />
+          </div>
+          <button type="submit" class="w-full bg-[#FF6B35] text-white font-bold py-4 rounded-xl hover:bg-[#e55a2b] transition-colors shadow-lg">
+            Complete UPI Payment
+          </button>
+        </form>
+
+        <!-- Net Banking Form -->
+        <form id="formNet" onsubmit="processPayment(event, 'Net Banking')" class="hidden space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Select Bank</label>
+            <select class="w-full px-4 py-3 border rounded-xl text-sm">
+              <option>HDFC Bank</option>
+              <option>State Bank of India</option>
+              <option>ICICI Bank</option>
+              <option>Axis Bank</option>
+            </select>
+          </div>
+          <button type="submit" class="w-full mt-6 bg-[#FF6B35] text-white font-bold py-4 rounded-xl hover:bg-[#e55a2b] transition-colors shadow-lg">
+            Pay via Net Banking
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="static/js/app-state.js"></script>
+  <script src="static/js/chatbot.js"></script>
+  <script>
+    let currentBookingId = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      currentBookingId = params.get('id');
+
+      const bookings = WayfareState.getBookings();
+      const booking = bookings.find(b => b.id == currentBookingId) || bookings[0];
+
+      if (booking) {
+        currentBookingId = booking.id;
+        document.getElementById('summaryDest').textContent = booking.destination;
+        document.getElementById('summaryDate').textContent = booking.date;
+        document.getElementById('summaryTravelers').textContent = `${booking.travelers || 1} Person(s)`;
+        const amt = booking.total_amount || 185000;
+        document.getElementById('summaryAmount').textContent = `₹${Number(amt).toLocaleString('en-IN')}`;
+      }
+    });
+
+    function switchTab(tab) {
+      document.querySelectorAll('#tabCard, #tabUpi, #tabNet').forEach(btn => {
+        btn.className = 'flex-1 py-3 px-4 border-2 border-gray-200 text-gray-600 font-bold rounded-xl text-sm';
+      });
+      document.querySelectorAll('#formCard, #formUpi, #formNet').forEach(f => f.classList.add('hidden'));
+
+      if (tab === 'card') {
+        document.getElementById('tabCard').className = 'flex-1 py-3 px-4 border-2 border-[#FF6B35] bg-[#FF6B35]/10 text-[#FF6B35] font-bold rounded-xl text-sm';
+        document.getElementById('formCard').classList.remove('hidden');
+      } else if (tab === 'upi') {
+        document.getElementById('tabUpi').className = 'flex-1 py-3 px-4 border-2 border-[#FF6B35] bg-[#FF6B35]/10 text-[#FF6B35] font-bold rounded-xl text-sm';
+        document.getElementById('formUpi').classList.remove('hidden');
+      } else {
+        document.getElementById('tabNet').className = 'flex-1 py-3 px-4 border-2 border-[#FF6B35] bg-[#FF6B35]/10 text-[#FF6B35] font-bold rounded-xl text-sm';
+        document.getElementById('formNet').classList.remove('hidden');
+      }
+    }
+
+    function processPayment(e, method) {
+      e.preventDefault();
+      const randomTxn = 'TXN-' + Math.floor(100000 + Math.random() * 900000);
+
+      const bookings = WayfareState.getBookings();
+      const b = bookings.find(item => item.id == currentBookingId);
+      if (b) {
+        b.status = 'Confirmed';
+        b.payment_method = method;
+        b.transaction_id = randomTxn;
+        localStorage.setItem('wayfare_bookings', JSON.stringify(bookings));
+      }
+
+      window.location.href = `receipt.html?id=${currentBookingId}`;
+    }
+  </script>
+</body>
+
+</html>

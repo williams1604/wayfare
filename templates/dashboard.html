@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - Wayfare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-[#FAFBFC] text-[#2D3142]">
+    <!-- Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-[1280px] mx-auto px-6">
+            <nav class="flex items-center justify-between h-20">
+                <div class="flex items-center">
+                    <svg class="w-10 h-10 text-[#FF6B35]" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z">
+                        </path>
+                    </svg>
+                    <span class="ml-2 text-2xl font-bold text-[#2D3142]">Wayfare</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="text-sm font-medium text-[#2D3142]">Hello, {{ session.name }}</span>
+                    <a href="/" class="text-sm font-medium text-[#6B7280]">Home</a>
+                    <a href="/logout" class="text-sm font-medium text-[#FF6B35]">Logout</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="max-w-[1280px] mx-auto px-6 py-12" data-aos="fade-up">
+        <h1 class="text-3xl font-bold mb-8">My Bookings</h1>
+
+        {% if bookings %}
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+            <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-100">
+                    <tr>
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Destination
+                        </th>
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Date</th>
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Booking ID
+                        </th>
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Ratings
+                        </th>
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    {% for booking in bookings %}
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4 font-medium text-[#2D3142]">{{ booking.destination }}</td>
+                        <td class="px-6 py-4 text-gray-600">
+                            {{ booking.date }} {% if booking.end_date %}to {{ booking.end_date }}{% endif %}
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 text-xs font-medium rounded-full 
+                                    {% if booking.status == 'Confirmed' %}bg-green-100 text-green-700
+                                    {% elif booking.status == 'Pending' %}bg-yellow-100 text-yellow-700
+                                    {% elif booking.status == 'Validation Pending' %}bg-blue-100 text-blue-700
+                                    {% elif booking.status == 'Cancelled' %}bg-red-100 text-red-700
+                                    {% elif booking.status == 'Expired' %}bg-gray-200 text-gray-600
+                                    {% else %}bg-gray-100 text-gray-700{% endif %}">
+                                {{ booking.status }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-gray-400">#{{ booking.id }}</td>
+                        <td class="px-6 py-4">
+                            {% if (booking.status == 'Confirmed' or booking.status == 'Expired') and booking.package_id
+                            %}
+                            {% if booking.user_rating %}
+                            <div class="flex items-center gap-1 text-yellow-500" title="{{ booking.user_comment }}">
+                                {% for i in range(booking.user_rating) %}
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                {% endfor %}
+                                <button type="button" data-package-id="{{ booking.package_id }}"
+                                    data-package-name="{{ booking.destination|escape }}" onclick="showReviewModal(this)"
+                                    class="ml-1 text-xs text-gray-400 hover:text-[#FF6B35]">Edit</button>
+                            </div>
+                            {% else %}
+                            <button type="button" data-package-id="{{ booking.package_id }}"
+                                data-package-name="{{ booking.destination|escape }}" onclick="showReviewModal(this)"
+                                class="text-yellow-600 hover:text-yellow-700 font-medium text-sm flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                Rate
+                            </button>
+                            {% endif %}
+                            {% else %}
+                            <span class="text-gray-300 text-xs">-</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center space-x-3">
+                                {% if booking.status == 'Confirmed' %}
+                                <a href="/receipt/{{ booking.id }}" target="_blank"
+                                    class="text-green-600 hover:text-green-800 font-medium text-sm transition-colors whitespace-nowrap">
+                                    Receipt
+                                </a>
+                                {% endif %}
+                                <button type="button" data-dest="{{ booking.destination|escape }}"
+                                    data-status="{{ booking.status|escape }}"
+                                    data-travelers="{{ booking.travelers|escape }}"
+                                    data-dates="{{ booking.date }} {% if booking.end_date %}to {{ booking.end_date }}{% endif %}"
+                                    data-name="{{ booking.first_name|escape }} {{ booking.last_name|escape }}"
+                                    data-requests="{{ booking.special_requests|escape }}"
+                                    onclick='showBookingModal(this)'
+                                    class="text-[#0a4fa3] hover:text-[#083a78] font-medium text-sm transition-colors">
+                                    View
+                                </button>
+                                {% if booking.status not in ['Cancelled', 'Expired'] %}
+                                {% if booking.status == 'Pending' %}
+                                <a href="/payment/{{ booking.id }}"
+                                    class="text-white bg-[#FF6B35] hover:bg-[#e55a2b] font-medium text-xs px-3 py-1.5 rounded transition-colors whitespace-nowrap">
+                                    Pay Now
+                                </a>
+                                {% endif %}
+                                <form action="/cancel_booking/{{ booking.id }}" method="POST"
+                                    onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+                                    <button type="submit"
+                                        class="text-red-600 hover:text-red-900 font-medium text-sm">Cancel</button>
+                                </form>
+                                {% elif booking.status == 'Cancelled' %}
+                                <span class="text-gray-400 text-sm">Cancelled</span>
+                                {% elif booking.status == 'Expired' %}
+                                <span class="text-gray-400 text-sm italic">Trip Completed</span>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="bg-white rounded-xl shadow-sm p-12 text-center">
+            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                    </path>
+                </svg>
+            </div>
+            <h3 class="text-xl font-medium text-gray-900 mb-2">No bookings yet</h3>
+            <p class="text-gray-500 mb-6">You haven't made any bookings yet.</p>
+            <a href="/packages"
+                class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#FF6B35] hover:bg-[#e55a2b] transition-colors">
+                Browse Packages
+            </a>
+        </div>
+        {% endif %}
+
+        <h1 class="text-3xl font-bold mb-8 mt-12" data-aos="fade-up">My Enquiries</h1>
+        {% if enquiries %}
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+            <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-100">
+                    <tr>
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Subject</th>
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Message</th>
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Response</th>
+                        <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    {% for enquiry in enquiries %}
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4 font-medium text-[#2D3142]">{{ enquiry.subject }}</td>
+                        <td class="px-6 py-4 text-gray-600 truncate max-w-xs" title="{{ enquiry.message }}">{{
+                            enquiry.message }}</td>
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 text-xs font-medium rounded-full 
+                                    {% if enquiry.status == 'Responded' %}bg-green-100 text-green-700
+                                    {% else %}bg-yellow-100 text-yellow-700{% endif %}">
+                                {{ enquiry.status }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-gray-600">
+                            {% if enquiry.response %}
+                            {{ enquiry.response|truncate(30) }}
+                            {% else %}
+                            <span class="text-gray-400 italic">Waiting...</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4">
+                            <button type="button" data-subject="{{ enquiry.subject|escape }}"
+                                data-message="{{ enquiry.message|escape }}"
+                                data-response="{{ enquiry.response|escape if enquiry.response else '' }}"
+                                onclick='showEnquiryModal(this)'
+                                class="text-[#0a4fa3] hover:text-[#083a78] font-medium text-sm transition-colors">
+                                View
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="bg-white rounded-xl shadow-sm p-8 text-center mt-4">
+            <p class="text-gray-500">You haven't submitted any enquiries yet.</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Booking Details Modal -->
+    <div id="bookingModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-gray-900/40 backdrop-blur-sm transition-opacity"
+            onclick="closeModal('bookingModal')"></div>
+        <!-- Modal Content -->
+        <div
+            class="relative bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden transform transition-all p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-[#2D3142]">Booking Details</h3>
+                <button onclick="closeModal('bookingModal')"
+                    class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-sm text-gray-500">Destination</p>
+                        <p id="modalBkgDest" class="font-medium text-[#2D3142]"></p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Booking Status</p>
+                        <p id="modalBkgStatus" class="font-medium"></p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-sm text-gray-500">Payment Status</p>
+                        <div class="mt-1"><span id="modalBkgPayment"></span></div>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Travelers</p>
+                        <p id="modalBkgTravelers" class="font-medium text-[#2D3142]"></p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-sm text-gray-500">Date Range</p>
+                        <p id="modalBkgDates" class="font-medium text-[#2D3142]"></p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Passenger Name</p>
+                        <p id="modalBkgName" class="font-medium text-[#2D3142]"></p>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Special Requests</p>
+                    <div id="modalBkgRequests"
+                        class="p-3 bg-gray-50 rounded-lg text-sm text-[#2D3142] whitespace-pre-wrap"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enquiry Details Modal -->
+    <div id="enquiryModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-gray-900/40 backdrop-blur-sm transition-opacity"
+            onclick="closeModal('enquiryModal')"></div>
+        <!-- Modal Content -->
+        <div
+            class="relative bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden transform transition-all p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-[#2D3142]">Enquiry Details</h3>
+                <button onclick="closeModal('enquiryModal')"
+                    class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <p class="text-sm text-gray-500">Subject</p>
+                    <p id="modalEnqSubject" class="font-medium text-[#2D3142]"></p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Message</p>
+                    <div id="modalEnqMessage"
+                        class="p-3 bg-gray-50 rounded-lg text-sm text-[#2D3142] whitespace-pre-wrap mb-4"></div>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Response</p>
+                    <div id="modalEnqResponse"
+                        class="p-3 bg-blue-50/50 rounded-lg text-sm text-[#2D3142] whitespace-pre-wrap"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div id="reviewModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-gray-900/40 backdrop-blur-sm" onclick="closeModal('reviewModal')"></div>
+        <div class="relative bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-[#2D3142]">Rate your trip to <span id="reviewPackageName"></span></h3>
+                <button onclick="closeModal('reviewModal')" class="text-gray-400 hover:text-gray-600">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <form action="/add_review" method="POST" class="space-y-6">
+                <input type="hidden" name="package_id" id="reviewPackageId">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Rating</label>
+                    <div class="flex items-center gap-2" id="starContainer">
+                        {% for i in range(1, 6) %}
+                        <button type="button" onclick="setRating(this.dataset.value)"
+                            class="star-btn text-gray-300 hover:text-yellow-400 transition-colors" data-value="{{ i }}">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                        </button>
+                        {% endfor %}
+                    </div>
+                    <input type="hidden" name="rating" id="ratingInput" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Your Feedback</label>
+                    <textarea name="comment" rows="4"
+                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent outline-none transition-all resize-none"
+                        placeholder="How was your experience?"></textarea>
+                </div>
+                <button type="submit"
+                    class="w-full bg-[#FF6B35] text-white font-bold py-4 rounded-xl hover:bg-[#FF8B60] transition-colors shadow-lg shadow-[#FF6B35]/20">
+                    Submit Review
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        function showBookingModal(button) {
+            document.getElementById('modalBkgDest').textContent = button.dataset.dest || 'N/A';
+
+            const status = button.dataset.status || 'N/A';
+            document.getElementById('modalBkgStatus').textContent = status;
+
+            const paymentStatusElem = document.getElementById('modalBkgPayment');
+            if (status === 'Confirmed') {
+                paymentStatusElem.textContent = 'Successful';
+                paymentStatusElem.className = 'px-3 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700';
+            } else if (status === 'Validation Pending') {
+                paymentStatusElem.textContent = 'Verification Pending';
+                paymentStatusElem.className = 'px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-700';
+            } else if (status === 'Pending') {
+                paymentStatusElem.textContent = 'Pending Payment';
+                paymentStatusElem.className = 'px-3 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-700';
+            } else if (status === 'Cancelled') {
+                paymentStatusElem.textContent = 'Refunded / Cancelled';
+                paymentStatusElem.className = 'px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-700';
+            } else {
+                paymentStatusElem.textContent = 'N/A';
+                paymentStatusElem.className = 'px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-700';
+            }
+
+            document.getElementById('modalBkgTravelers').textContent = button.dataset.travelers || 'N/A';
+            document.getElementById('modalBkgDates').textContent = button.dataset.dates || 'N/A';
+            document.getElementById('modalBkgName').textContent = button.dataset.name || 'N/A';
+
+            const requests = button.dataset.requests;
+            const reqDiv = document.getElementById('modalBkgRequests');
+            if (requests && requests.trim() !== '') {
+                reqDiv.textContent = requests;
+                reqDiv.classList.remove('hidden');
+            } else {
+                reqDiv.classList.add('hidden');
+            }
+
+            document.getElementById('bookingModal').classList.remove('hidden');
+        }
+
+        function showEnquiryModal(button) {
+            document.getElementById('modalEnqSubject').textContent = button.dataset.subject || 'N/A';
+            document.getElementById('modalEnqMessage').textContent = button.dataset.message || 'N/A';
+
+            const response = button.dataset.response;
+            const respNode = document.getElementById('modalEnqResponse');
+            if (response && response.trim() !== '') {
+                respNode.textContent = response;
+                respNode.classList.remove('italic', 'text-gray-500');
+            } else {
+                respNode.textContent = 'Waiting for response...';
+                respNode.classList.add('italic', 'text-gray-500');
+            }
+
+            document.getElementById('enquiryModal').classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        function showReviewModal(button) {
+            document.getElementById('reviewPackageId').value = button.dataset.packageId;
+            document.getElementById('reviewPackageName').textContent = button.dataset.packageName;
+            setRating(0); // Reset rating
+            document.getElementById('reviewModal').classList.remove('hidden');
+        }
+
+        function setRating(val) {
+            document.getElementById('ratingInput').value = val;
+            const stars = document.querySelectorAll('.star-btn');
+            stars.forEach((star, index) => {
+                if (index < val) {
+                    star.classList.remove('text-gray-300');
+                    star.classList.add('text-yellow-400');
+                } else {
+                    star.classList.add('text-gray-300');
+                    star.classList.remove('text-yellow-400');
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Wayfare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Enquiry Detail Modal -->
+    <div id="enquiryModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeEnquiryModal()"></div>
+        <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg z-10 overflow-hidden">
+            <div class="bg-gradient-to-r from-[#004E89] to-[#0066b3] px-6 py-4 flex items-center justify-between">
+                <div>
+                    <h2 class="text-white font-bold text-lg" id="enq-name">Enquiry</h2>
+                    <p class="text-white/70 text-xs" id="enq-email"></p>
+                </div>
+                <button onclick="closeEnquiryModal()" class="text-white/80 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <p class="text-xs text-gray-400 font-medium mb-1">Subject</p>
+                    <p class="text-sm font-semibold text-gray-800" id="enq-subject"></p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <p class="text-xs text-gray-400 font-medium mb-1">Message</p>
+                    <p class="text-sm text-gray-700 leading-relaxed" id="enq-message"></p>
+                </div>
+                <div class="bg-blue-50 rounded-xl p-4" id="enq-response-wrap">
+                    <p class="text-xs text-blue-400 font-medium mb-1">Admin Response</p>
+                    <p class="text-sm text-blue-800 leading-relaxed" id="enq-response"></p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-medium text-gray-500">Status:</span>
+                    <span class="px-2.5 py-1 text-xs font-semibold rounded-full" id="enq-status"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar & Content Wrapper -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white shadow-md flex-shrink-0 hidden md:flex flex-col">
+            <div class="p-6 border-b border-gray-100">
+                <div class="flex items-center gap-2 text-[#FF6B35]">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z">
+                        </path>
+                    </svg>
+                    <span class="text-xl font-bold">Wayfare Admin</span>
+                </div>
+            </div>
+            <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+                <a href="/admin"
+                    class="flex items-center gap-3 px-4 py-3 text-[#FF6B35] bg-orange-50 rounded-lg font-medium">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                        </path>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="/admin/bookings"
+                    class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                        </path>
+                    </svg>
+                    Bookings
+                </a>
+                <a href="/admin/reviews"
+                    class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    Reviews
+                    {% set pending_count = get_pending_reviews_count() %}
+                    {% if pending_count > 0 %}
+                    <span class="ml-auto bg-orange-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">{{ pending_count }}</span>
+                    {% endif %}
+                </a>
+                <a href="/admin/packages/add"
+                    class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Add Package
+                </a>
+                <a href="/"
+                    class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Back to Site
+                </a>
+                <a href="/logout"
+                    class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors mt-auto">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                        </path>
+                    </svg>
+                    Logout
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto p-8">
+            <header class="flex items-center justify-between mb-8">
+                <h1 class="text-3xl font-bold text-gray-800">Dashboard Overview</h1>
+                <div class="flex items-center gap-4">
+                    <div class="text-right">
+                        <div class="text-sm font-medium text-gray-900">{{ session.name }}</div>
+                        <div class="text-xs text-gray-500">Administrator</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-gray-500 text-sm font-medium">Total Bookings</h3>
+                        <div class="p-2 bg-blue-50 rounded-lg text-blue-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-900">{{ bookings_count }}</div>
+                    <div class="text-sm text-green-600 mt-2 flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                        <span>+12% from last month</span>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-gray-500 text-sm font-medium">Active Users</h3>
+                        <div class="p-2 bg-green-50 rounded-lg text-green-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-900">{{ users_count }}</div>
+                    <div class="text-sm text-green-600 mt-2 flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                        <span>+5% new users</span>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-gray-500 text-sm font-medium">Total Packages</h3>
+                        <div class="p-2 bg-purple-50 rounded-lg text-purple-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-900">{{ packages_count }}</div>
+                    <div class="text-sm text-gray-500 mt-2">Active travel packages</div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-gray-500 text-sm font-medium">Pending Reviews</h3>
+                        <div class="p-2 bg-yellow-50 rounded-lg text-yellow-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-900">{{ get_pending_reviews_count() }}</div>
+                    <div class="text-sm text-gray-500 mt-2">Awaiting approval</div>
+                </div>
+            </div>
+
+            <!-- Recent Bookings Table -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-8">
+                <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                    <h2 class="text-lg font-semibold text-gray-800">Recent Bookings</h2>
+                    <a href="/admin/bookings" class="text-sm font-medium text-[#FF6B35] hover:text-[#e55a2b]">View
+                        All</a>
+                </div>
+                <table class="w-full text-left">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">User</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                                Destination</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Date</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        {% for booking in recent_bookings %}
+                        <tr class="hover:bg-gray-50 transition-colors bg-white">
+                            <td class="px-6 py-4 font-medium text-gray-900">{{ booking.name }}</td>
+                            <td class="px-6 py-4 text-gray-600">{{ booking.destination }}</td>
+                            <td class="px-6 py-4 text-gray-600">{{ booking.date }}</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2.5 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700">
+                                    {{ booking.status }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Recent Enquiries Table -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                    <h2 class="text-lg font-semibold text-gray-800">Recent Enquiries</h2>
+                </div>
+                <table class="w-full text-left">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">User</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Subject
+                            </th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Message
+                            </th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status
+                            </th>
+                            <th
+                                class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider text-center">
+                                Actions</th>
+                            <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Response
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        {% for enquiry in recent_enquiries %}
+                        <tr class="hover:bg-gray-50 transition-colors bg-white">
+                            <td class="px-6 py-4 font-medium text-gray-900">{{ enquiry.name }}<br><span
+                                    class="text-xs text-gray-500">{{ enquiry.email }}</span></td>
+                            <td class="px-6 py-4 text-gray-600">{{ enquiry.subject }}</td>
+                            <td class="px-6 py-4 text-gray-600 truncate max-w-xs" title="{{ enquiry.message }}">{{
+                                enquiry.message }}</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2.5 py-1 text-xs font-medium rounded-full 
+                                    {% if enquiry.status == 'Responded' %}bg-green-100 text-green-700
+                                    {% else %}bg-yellow-100 text-yellow-700{% endif %}">
+                                    {{ enquiry.status }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center justify-center gap-2">
+                                    <!-- View button -->
+                                    <button
+                                        class="enq-view-btn flex items-center gap-1 px-2.5 py-1.5 bg-blue-50 text-blue-600 border border-blue-200 text-xs rounded-md hover:bg-blue-100 transition-colors font-semibold"
+                                        data-name="{{ enquiry.name | e }}" data-email="{{ enquiry.email | e }}"
+                                        data-subject="{{ enquiry.subject | e }}"
+                                        data-message="{{ enquiry.message | e }}"
+                                        data-response="{{ (enquiry.response or '') | e }}"
+                                        data-status="{{ enquiry.status }}">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                        </svg>
+                                        View
+                                    </button>
+                                    <!-- Delete button -->
+                                    <form method="POST" action="/admin/enquiry/delete/{{ enquiry.id }}"
+                                        onsubmit="return confirm('Delete this enquiry from {{ enquiry.name }}? This cannot be undone.')">
+                                        <button type="submit"
+                                            class="flex items-center gap-1 px-2.5 py-1.5 bg-red-50 text-red-600 border border-red-200 text-xs rounded-md hover:bg-red-100 transition-colors font-semibold">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                {% if enquiry.status != 'Responded' %}
+                                <form action="/admin/enquiry/respond/{{ enquiry.id }}" method="POST" class="flex gap-2">
+                                    <input type="text" name="response" placeholder="Type response..."
+                                        class="border rounded px-2 py-1 text-sm w-full min-w-[150px]" required>
+                                    <button type="submit"
+                                        class="bg-[#FF6B35] text-white px-3 py-1 rounded text-sm hover:bg-[#e55a2b] whitespace-nowrap">Send</button>
+                                </form>
+                                {% else %}
+                                <div class="flex items-center gap-1.5 text-gray-500 text-sm italic">
+                                    <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    Responded
+                                </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Enquiry view modal
+        document.addEventListener('click', function (e) {
+            const btn = e.target.closest('.enq-view-btn');
+            if (!btn) return;
+            const d = btn.dataset;
+            document.getElementById('enq-name').textContent = d.name;
+            document.getElementById('enq-email').textContent = d.email;
+            document.getElementById('enq-subject').textContent = d.subject;
+            document.getElementById('enq-message').textContent = d.message;
+
+            const respWrap = document.getElementById('enq-response-wrap');
+            if (d.response && d.response.trim()) {
+                document.getElementById('enq-response').textContent = d.response;
+                respWrap.classList.remove('hidden');
+            } else {
+                respWrap.classList.add('hidden');
+            }
+
+            const statusEl = document.getElementById('enq-status');
+            statusEl.textContent = d.status;
+            statusEl.className = 'px-2.5 py-1 text-xs font-semibold rounded-full ' +
+                (d.status === 'Responded' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700');
+
+            const modal = document.getElementById('enquiryModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        });
+
+        function closeEnquiryModal() {
+            const modal = document.getElementById('enquiryModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeEnquiryModal(); });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Wayfare - Payment Gateway</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Poppins:wght@600;700&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-[#FAFBFC] text-[#2D3142]">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-[1280px] mx-auto px-6">
+            <nav class="flex items-center justify-between h-20">
+                <div class="flex items-center">
+                    <svg class="w-10 h-10 text-[#FF6B35]" fill="currentColor" viewbox="0 0 24 24">
+                        <path
+                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z">
+                        </path>
+                    </svg>
+                    <span class="ml-2 text-2xl font-bold text-[#2D3142]">Wayfare</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/dashboard" class="text-sm font-medium text-[#6B7280] hover:text-[#2D3142]">Cancel &
+                        Return</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="py-16 md:py-24 max-w-4xl mx-auto px-6">
+        <div class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-[#2D3142] mb-4">Complete Your Payment</h1>
+            <p class="text-[#6B7280]">Review your booking details and securely complete your payment.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <!-- Booking Summary -->
+            <div class="bg-white rounded-2xl p-8 shadow-lg h-fit">
+                <h2 class="text-xl font-semibold mb-6 border-b pb-4">Booking Summary</h2>
+                <div class="space-y-4">
+                    <div class="flex justify-between">
+                        <span class="text-[#6B7280]">Destination</span>
+                        <span class="font-medium text-[#2D3142]">{{ booking.destination }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-[#6B7280]">Travelers</span>
+                        <span class="font-medium text-[#2D3142]">{{ booking.travelers }} Person(s)</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-[#6B7280]">Date</span>
+                        <span class="font-medium text-[#2D3142]">
+                            {{ booking.date }}
+                            {% if booking.end_date %} to {{ booking.end_date }} {% endif %}
+                        </span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-[#6B7280]">Name</span>
+                        <span class="font-medium text-[#2D3142]">{{ booking.first_name }} {{ booking.last_name }}</span>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-dashed space-y-2">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-[#6B7280]">Price per person / day</span>
+                        <span class="font-medium text-[#2D3142]">₹{{ "{:,.2f}".format(price) }}</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-[#6B7280]">Duration</span>
+                        <span class="font-medium text-[#2D3142]">{{ num_days }} Day(s)</span>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-4 border-t flex justify-between items-center">
+                    <span class="text-lg font-semibold text-[#2D3142]">Total Amount</span>
+                    <span class="text-2xl font-bold text-[#FF6B35]">₹{{ "{:,.2f}".format(total_amount) }}</span>
+                </div>
+            </div>
+
+            <!-- Payment Form -->
+            <div class="bg-white rounded-2xl p-8 shadow-lg">
+                <h2 class="text-xl font-semibold mb-6 border-b pb-4">Payment Details</h2>
+
+                <!-- Tabs -->
+                <div class="flex space-x-4 mb-6 border-b">
+                    <button type="button" class="pb-2 border-b-2 border-[#FF6B35] text-[#FF6B35] font-medium" id="tab-card" onclick="switchTab('card')">Credit/Debit Card</button>
+                    <button type="button" class="pb-2 border-b-2 border-transparent text-[#6B7280] font-medium" id="tab-upi" onclick="switchTab('upi')">UPI / GPay</button>
+                </div>
+
+                <form action="/process_payment/{{ booking.id }}" method="POST" class="space-y-5"
+                    onsubmit="return validatePayment()">
+                    <input type="hidden" name="payment_method" id="payment_method" value="Card">
+
+                    <div id="form-card" class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-medium text-[#2D3142] mb-2">Cardholder Name</label>
+                        <input type="text" id="card_name" required placeholder="John Doe"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-shadow" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-[#2D3142] mb-2">Card Number</label>
+                        <div class="relative">
+                            <input type="text" id="card_number" required placeholder="0000 0000 0000 0000"
+                                maxlength="19"
+                                class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-shadow"
+                                oninput="formatCardNumber(this)" />
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-[#2D3142] mb-2">Expiry Date</label>
+                            <input type="text" id="expiry" required placeholder="MM/YY" maxlength="5"
+                                class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-shadow"
+                                oninput="formatExpiry(this)" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-[#2D3142] mb-2">CVV</label>
+                            <input type="password" id="cvv" required placeholder="123" maxlength="4"
+                                class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-shadow" />
+                        </div>
+                    </div>
+                    </div>
+
+                    <div id="form-upi" style="display: none;" class="text-center py-4">
+                        <p class="text-[#6B7280] mb-4">Scan the QR code with any UPI app to pay</p>
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=wayfare@upi&pn=Wayfare&am={{ total_amount }}" alt="GPay QR Code" class="mx-auto rounded-lg shadow-sm border border-gray-200 p-2 mb-4" />
+                        <p class="text-sm text-[#FF6B35] font-medium">Click "Pay" below after scanning</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-[#2D3142] mb-2">Transaction / Reference ID</label>
+                        <input type="text" name="transaction_id" required placeholder="Enter UTR or reference number" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-shadow" />
+                        <p class="text-xs text-[#6B7280] mt-1">Required for payment verification.</p>
+                    </div>
+
+                    <button type="submit" id="pay-button"
+                        class="mt-6 w-full flex justify-center py-4 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-[#FF6B35] hover:bg-[#E85D2A] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF6B35] transition-colors">
+                        Pay ₹{{ "{:,.2f}".format(total_amount) }}
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        function formatCardNumber(input) {
+            let value = input.value.replace(/\D/g, '');
+            let formattedValue = '';
+            for (let i = 0; i < value.length; i++) {
+                if (i > 0 && i % 4 === 0) {
+                    formattedValue += ' ';
+                }
+                formattedValue += value[i];
+            }
+            input.value = formattedValue;
+        }
+
+        function formatExpiry(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length > 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            input.value = value;
+        }
+
+        function switchTab(tab) {
+            document.getElementById('payment_method').value = tab === 'card' ? 'Card' : 'UPI';
+            const tabCard = document.getElementById('tab-card');
+            const tabUpi = document.getElementById('tab-upi');
+            const formCard = document.getElementById('form-card');
+            const formUpi = document.getElementById('form-upi');
+
+            const cardInputs = formCard.querySelectorAll('input');
+
+            if (tab === 'card') {
+                tabCard.classList.remove('border-transparent', 'text-[#6B7280]');
+                tabCard.classList.add('border-[#FF6B35]', 'text-[#FF6B35]');
+                tabUpi.classList.remove('border-[#FF6B35]', 'text-[#FF6B35]');
+                tabUpi.classList.add('border-transparent', 'text-[#6B7280]');
+                formCard.style.display = 'block';
+                formUpi.style.display = 'none';
+                cardInputs.forEach(input => input.setAttribute('required', 'true'));
+            } else {
+                tabUpi.classList.remove('border-transparent', 'text-[#6B7280]');
+                tabUpi.classList.add('border-[#FF6B35]', 'text-[#FF6B35]');
+                tabCard.classList.remove('border-[#FF6B35]', 'text-[#FF6B35]');
+                tabCard.classList.add('border-transparent', 'text-[#6B7280]');
+                formCard.style.display = 'none';
+                formUpi.style.display = 'block';
+                cardInputs.forEach(input => input.removeAttribute('required'));
+            }
+        }
+
+        function validatePayment() {
+            const btn = document.getElementById('pay-button');
+            btn.innerHTML = 'Processing...';
+            btn.disabled = true;
+            btn.classList.add('opacity-75');
+            return true;
+        }
+    </script>
+</body>
+
+</html>

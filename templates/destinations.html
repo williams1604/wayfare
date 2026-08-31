@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>
+    Explore Destinations | Discover Your Next Adventure
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Poppins:wght@600;700&amp;display=swap"
+    rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
+</head>
+
+<body class="bg-[#FAFBFC] text-[#2D3142]">
+  <!--- START: Header Navigation --->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <nav class="flex items-center justify-between h-20">
+        <div class="flex items-center">
+          <svg class="w-10 h-10 text-[#FF6B35]" fill="currentColor" viewbox="0 0 24 24">
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z">
+            </path>
+          </svg>
+          <span class="ml-2 text-2xl font-bold text-[#2D3142]">
+            Wayfare
+          </span>
+        </div>
+        <ul class="hidden md:flex items-center space-x-8 text-sm font-medium">
+          <li>
+            <a class="text-[#2D3142] cursor-pointer" href='/'>
+              Home
+            </a>
+          </li>
+          <li>
+            <a class="text-[#FF6B35] cursor-pointer" href='/destinations'>
+              Destinations
+            </a>
+          </li>
+          <li>
+            <a class="text-[#2D3142] cursor-pointer" href='/packages'>
+              Packages
+            </a>
+          </li>
+          <li>
+            <a class="text-[#2D3142] cursor-pointer" href='/about'>
+              About
+            </a>
+          </li>
+          <li>
+            <a class="text-[#2D3142] cursor-pointer" href='/contact'>
+              Contact
+            </a>
+          </li>
+        </ul>
+        <div class="flex items-center space-x-4">
+          {% if session.user_id %}
+          <div class="flex items-center gap-4">
+            <span class="text-sm font-medium text-[#2D3142]">Hello, {{ session.name }}</span>
+            {% if session.role == 'admin' %}
+            <a href="/admin" class="text-sm font-medium text-[#FF6B35]">Admin Panel</a>
+            {% else %}
+            <a href="/dashboard" class="text-sm font-medium text-[#FF6B35]">Dashboard</a>
+            {% endif %}
+            <a href="/logout" class="text-sm font-medium text-[#6B7280]">Logout</a>
+          </div>
+          {% else %}
+          <a href="/#signin"
+            class="hidden md:block px-7 py-3.5 text-sm font-medium text-[#FF6B35] border-2 border-[#FF6B35] rounded-lg mr-4">
+            Login
+          </a>
+          <a href="/#booknow" class="px-7 py-3.5 text-sm font-medium text-white bg-[#FF6B35] rounded-lg">
+            Book Now
+          </a>
+          {% endif %}
+        </div>
+      </nav>
+    </div>
+  </header>
+  <!--- END --->
+  <!--- START: Hero Section --->
+  <section class="relative h-screen  flex items-center justify-center">
+    <img alt="Mountain landscape" class="absolute inset-0 w-full h-full object-cover"
+      src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&amp;h=1080&amp;fit=crop" />
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[rgba(0,0,0,0.7)]">
+    </div>
+    <div class="relative z-10 text-center text-white px-6 max-w-4xl" data-aos="zoom-in" data-aos-duration="1000">
+      <h1 class="text-[56px] font-bold mb-6 -tracking-wider">
+        Discover Amazing Destinations
+      </h1>
+      <p class="text-xl leading-relaxed mb-8">
+        Explore breathtaking landscapes, vibrant cultures, and unforgettable experiences around the world
+      </p>
+    </div>
+  </section>
+  <!--- END --->
+  <!--- START: Featured Destination --->
+  <section class="max-w-[1280px] mx-auto px-6 py-16">
+    <div class="bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+      <div class="grid md:grid-cols-2 gap-0">
+        <img alt="Santorini Greece" class="w-full h-full object-cover min-h-[400px]" data-aos="fade-right"
+          src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=800&amp;h=600&amp;fit=crop" />
+        <div class="p-12" data-aos="fade-left">
+          <div class="inline-block bg-[#F7B32B] text-white px-3 py-1.5 rounded-xl text-xs font-medium uppercase mb-4">
+            Featured
+          </div>
+          <h2 class="text-[40px] font-semibold mb-6 text-[#2D3142]">
+            Santorini, Greece
+          </h2>
+          <p class="text-base leading-relaxed text-[#6B7280] mb-6">
+            Experience the magic of whitewashed buildings, blue-domed churches, and stunning sunsets over the Aegean
+            Sea. Santorini offers a perfect blend of natural beauty, rich history, and Mediterranean charm.
+          </p>
+          <div class="grid grid-cols-2 gap-6 mb-8">
+            <div>
+              <div class="text-sm text-[#6B7280] mb-1">
+                Best Time to Visit
+              </div>
+              <div class="font-semibold text-[#2D3142]">
+                April - October
+              </div>
+            </div>
+            <div>
+              <div class="text-sm text-[#6B7280] mb-1">
+                Average Duration
+              </div>
+              <div class="font-semibold text-[#2D3142]">
+                5-7 Days
+              </div>
+            </div>
+          </div>
+          <a href="/packages"
+            class="inline-block text-center bg-[#FF6B35] text-white px-7 py-3.5 rounded-lg font-medium text-sm">
+            View Packages
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--- END --->
+  <!--- START: Popular Destinations Grid --->
+  <section class="max-w-[1280px] mx-auto px-6 py-16">
+    <div class="text-center mb-12">
+      <h2 class="text-[40px] font-semibold mb-4 text-[#2D3142]">
+        Popular Destinations
+      </h2>
+      <p class="text-base text-[#6B7280] max-w-2xl mx-auto">
+        Discover the most sought-after travel destinations handpicked by our experts
+      </p>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for dest in destinations %}
+      <div class="bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)]" data-aos="zoom-in"
+        data-aos-delay="100">
+        <div class="relative h-[280px]">
+          <img alt="{{ dest.name }}" class="w-full h-full object-cover" src="{{ dest.image_url }}" />
+          <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[rgba(0,0,0,0.7)]">
+          </div>
+          <div class="absolute bottom-6 left-6 text-white">
+            <h3 class="text-2xl font-semibold mb-1">
+              {{ dest.name }}
+            </h3>
+            <p class="text-sm">
+              {{ dest.tour_count }} Tours Available
+            </p>
+          </div>
+        </div>
+        <div class="p-6">
+          <p class="text-sm text-[#6B7280] mb-4">
+            Explore the beauty of {{ dest.name }}.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-[#2D3142]">
+              {{ dest.tour_count }} Packages Available
+            </span>
+            <button class="text-[#FF6B35] font-medium text-sm" data-name="{{ dest.name }}"
+              data-image="{{ dest.image_url }}" data-description="{{ dest.description }}"
+              onclick="openModalFromButton(this)">
+              Explore
+            </button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  <!--- END --->
+  <!--- START: Image Gallery --->
+  <section class="max-w-[1280px] mx-auto px-6 py-16">
+    <div class="text-center mb-12">
+      <h2 class="text-[40px] font-semibold mb-4 text-[#2D3142]">
+        Gallery Highlights
+      </h2>
+      <p class="text-base text-[#6B7280] max-w-2xl mx-auto">
+        Visual stories from travelers exploring the world's most beautiful destinations
+      </p>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4" data-aos="fade-up">
+      <div class="col-span-2 row-span-2">
+        <img alt="Mountain adventure" class="w-full h-full object-cover rounded-2xl"
+          src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&amp;h=800&amp;fit=crop" />
+      </div>
+      <div>
+        <img alt="Sunset beach" class="w-full h-full object-cover rounded-2xl"
+          src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400&amp;h=400&amp;fit=crop" />
+      </div>
+      <div>
+        <img alt="City skyline" class="w-full h-full object-cover rounded-2xl"
+          src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&amp;h=400&amp;fit=crop" />
+      </div>
+      <div>
+        <img alt="Desert landscape" class="w-full h-full object-cover rounded-2xl"
+          src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400&amp;h=400&amp;fit=crop" />
+      </div>
+      <div>
+        <img alt="Ocean view" class="w-full h-full object-cover rounded-2xl"
+          src="https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?w=400&amp;h=400&amp;fit=crop" />
+      </div>
+      <div>
+        <img alt="Ancient ruins" class="w-full h-full object-cover rounded-2xl"
+          src="https://images.unsplash.com/photo-1528127269322-539801943592?w=400&amp;h=400&amp;fit=crop" />
+      </div>
+      <div>
+        <img alt="Forest trail" class="w-full h-full object-cover rounded-2xl"
+          src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&amp;h=400&amp;fit=crop" />
+      </div>
+      <div class="col-span-2">
+        <img alt="Mountain peaks" class="w-full h-full object-cover rounded-2xl"
+          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&amp;h=400&amp;fit=crop" />
+      </div>
+    </div>
+  </section>
+  <!--- END --->
+  <!--- START: Destination Categories --->
+  <section class="max-w-[1280px] mx-auto px-6 py-16">
+    <div class="text-center mb-12">
+      <h2 class="text-[40px] font-semibold mb-4 text-[#2D3142]">
+        Explore by Category
+      </h2>
+      <p class="text-base text-[#6B7280] max-w-2xl mx-auto">
+        Find your perfect destination based on your travel preferences and interests
+      </p>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" data-aos="fade-up">
+      <div class="bg-white rounded-2xl p-8 text-center shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+        <div class="w-16 h-16 bg-[#FF6B35] bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-8 h-8 text-[#FF6B35]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"
+              stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            </path>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-semibold mb-3 text-[#2D3142]">
+          Beach Escapes
+        </h3>
+        <p class="text-sm text-[#6B7280] mb-4">
+          Pristine coastlines and tropical paradises
+        </p>
+        <span class="text-sm font-medium text-[#FF6B35]">
+          24 Destinations
+        </span>
+      </div>
+      <div class="bg-white rounded-2xl p-8 text-center shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+        <div class="w-16 h-16 bg-[#004E89] bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-8 h-8 text-[#004E89]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path
+              d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+              stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            </path>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-semibold mb-3 text-[#2D3142]">
+          Mountain Adventures
+        </h3>
+        <p class="text-sm text-[#6B7280] mb-4">
+          Peaks, trails, and alpine experiences
+        </p>
+        <span class="text-sm font-medium text-[#004E89]">
+          18 Destinations
+        </span>
+      </div>
+      <div class="bg-white rounded-2xl p-8 text-center shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+        <div class="w-16 h-16 bg-[#F7B32B] bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-8 h-8 text-[#F7B32B]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path
+              d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+              stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            </path>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-semibold mb-3 text-[#2D3142]">
+          City Breaks
+        </h3>
+        <p class="text-sm text-[#6B7280] mb-4">
+          Urban culture, history, and nightlife
+        </p>
+        <span class="text-sm font-medium text-[#F7B32B]">
+          32 Destinations
+        </span>
+      </div>
+      <div class="bg-white rounded-2xl p-8 text-center shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+        <div class="w-16 h-16 bg-[#06D6A0] bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-8 h-8 text-[#06D6A0]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path
+              d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"
+              stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            </path>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-semibold mb-3 text-[#2D3142]">
+          Cultural Heritage
+        </h3>
+        <p class="text-sm text-[#6B7280] mb-4">
+          Ancient sites and traditional wonders
+        </p>
+        <span class="text-sm font-medium text-[#06D6A0]">
+          21 Destinations
+        </span>
+      </div>
+    </div>
+  </section>
+  <!--- END --->
+  <!--- START: Travel Tips --->
+  <section class="bg-white py-16">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div data-aos="fade-right">
+          <h2 class="text-[40px] font-semibold mb-6 text-[#2D3142]">
+            Plan Your Perfect Journey
+          </h2>
+          <p class="text-base text-[#6B7280] leading-relaxed mb-8">
+            Discover insider tips and expert advice to make the most of your travel experience. From the best times to
+            visit to local customs and hidden gems.
+          </p>
+          <div class="space-y-6">
+            <div class="flex gap-4">
+              <div
+                class="w-12 h-12 bg-[#FF6B35] bg-opacity-10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-[#FF6B35]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2">
+                  </path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="text-xl font-medium mb-2 text-[#2D3142]">
+                  Best Travel Times
+                </h4>
+                <p class="text-sm text-[#6B7280]">
+                  Find out when to visit each destination for ideal weather and fewer crowds
+                </p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div
+                class="w-12 h-12 bg-[#004E89] bg-opacity-10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-[#004E89]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                  <path
+                    d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                  </path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="text-xl font-medium mb-2 text-[#2D3142]">
+                  Budget Planning
+                </h4>
+                <p class="text-sm text-[#6B7280]">
+                  Get estimates for accommodation, food, and activities at each destination
+                </p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div
+                class="w-12 h-12 bg-[#06D6A0] bg-opacity-10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-[#06D6A0]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                  <path
+                    d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                  </path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="text-xl font-medium mb-2 text-[#2D3142]">
+                  Local Insights
+                </h4>
+                <p class="text-sm text-[#6B7280]">
+                  Discover hidden gems and authentic experiences recommended by locals
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="relative" data-aos="fade-left">
+          <img alt="Travel planning" class="w-full rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.12)]"
+            src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&amp;h=600&amp;fit=crop" />
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--- END --->
+  <!--- START: Call to Action --->
+  <section class="max-w-[1280px] mx-auto px-6 py-16">
+    <div class="bg-gradient-to-r from-[#FF6B35] to-[#004E89] rounded-2xl p-12 md:p-16 text-center text-white"
+      data-aos="zoom-in">
+      <h2 class="text-[40px] font-semibold mb-6">
+        Ready to Start Your Adventure?
+      </h2>
+      <p class="text-lg mb-8 max-w-2xl mx-auto opacity-90">
+        Join thousands of travelers who have discovered their dream destinations with us. Let's create unforgettable
+        memories together.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/packages"
+          class="inline-block text-center bg-white text-[#FF6B35] px-8 py-4 rounded-lg font-semibold text-base">
+          Browse All Packages
+        </a>
+        <a href="/contact"
+          class="inline-block text-center bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-base">
+          Contact an Expert
+        </a>
+      </div>
+    </div>
+  </section>
+  <!--- END --->
+  <!--- START: Footer --->
+  <footer class="bg-[#2D3142] text-white py-12">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="text-2xl font-bold text-[#FF6B35] mb-4">
+            Wayfare
+          </div>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            Your trusted partner in creating unforgettable travel experiences around the world.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">
+            Quick Links
+          </h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li>
+              <a href="/about" class="hover:text-white transition-colors">About Us</a>
+            </li>
+            <li>
+              <a href="/destinations" class="hover:text-white transition-colors">Destinations</a>
+            </li>
+            <li>
+              <a href="/packages" class="hover:text-white transition-colors">Tour Packages</a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-white transition-colors">Travel Blog</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">
+            Support
+          </h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li>
+              Help Center
+            </li>
+            <li>
+              Terms of Service
+            </li>
+            <li>
+              Privacy Policy
+            </li>
+            <li>
+              Contact Us
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">
+            Contact
+          </h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li>
+              support@wayfare.com
+            </li>
+            <li>
+              +1 (555) 123-4567
+            </li>
+            <li>
+              123 Travel Street
+            </li>
+            <li>
+              New York, NY 10001
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-sm text-gray-400 mb-4 md:mb-0">
+          © 2024 Wayfare. All rights reserved.
+        </p>
+        <div class="flex gap-4">
+          <div class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center">
+            <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24">
+              <path
+                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z">
+              </path>
+            </svg>
+          </div>
+          <div class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center">
+            <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24">
+              <path
+                d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z">
+              </path>
+            </svg>
+          </div>
+          <div class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center">
+            <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24">
+              <path
+                d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z">
+              </path>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!--- END --->
+
+  <!--- START: Explore Modal --->
+  <div id="exploreModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog"
+    aria-modal="true">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onclick="closeModal()">
+      </div>
+      <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+      <div
+        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div class="sm:flex sm:items-start">
+            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+              <h3 class="text-2xl leading-6 font-medium text-gray-900 mb-4" id="modal-title"></h3>
+              <img id="modal-image" src="" alt="" class="w-full h-64 object-cover rounded-lg mb-4">
+              <p class="text-sm text-gray-500 mb-6" id="modal-description"></p>
+
+              <h4 class="text-lg font-semibold text-gray-900 mb-3">Available Packages</h4>
+              <div id="modal-packages" class="grid gap-4">
+                <!-- Packages will be injected here -->
+                <p class="text-gray-500 italic">No specific packages found for this destination.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+          <button type="button"
+            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+            onclick="closeModal()">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--- END --->
+
+  <!-- JSON Data Block to avoid Jinja/JS syntax issues -->
+  <script id="packages-data" type="application/json">
+    [
+      {% for p in packages %}
+      {
+        "name": {{ p['name'] | tojson }},
+        "duration": {{ p['duration'] | tojson }},
+        "price": {{ p['price'] }},
+        "image": {{ p['image_url'] | tojson }},
+        "rating": {{ p['rating'] }}
+      }{{ "," if not loop.last }}
+      {% endfor %}
+    ]
+  </script>
+
+  <script>
+    // Deserialize packages from JSON block
+    let allPackages = [];
+    try {
+      const dataElement = document.getElementById('packages-data');
+      if (dataElement) {
+        allPackages = JSON.parse(dataElement.textContent);
+      }
+    } catch (e) {
+      console.error("Failed to parse packages data", e);
+    }
+
+    function openModalFromButton(btn) {
+      const name = btn.getAttribute('data-name');
+      const image = btn.getAttribute('data-image');
+      const description = btn.getAttribute('data-description');
+      openModal(name, image, description);
+    }
+
+    function openModal(name, image, description) {
+      document.getElementById('modal-title').innerText = name;
+      document.getElementById('modal-image').src = image;
+      document.getElementById('modal-description').innerText = description || "Discover the beauty of " + name + ".";
+
+      const packagesList = document.getElementById('modal-packages');
+      packagesList.innerHTML = ''; // Clear previous
+
+      // Simple matching: verify if package name contains destination name
+      // Use simpler matching to find ANY relevant packages
+      const relevantPackages = allPackages.filter(p => {
+        return p.name.toLowerCase().includes(name.toLowerCase());
+      });
+
+      if (relevantPackages.length > 0) {
+        relevantPackages.forEach(pkg => {
+          // Format price to Lakhs
+          const priceInLakhs = (pkg.price / 100000).toFixed(2);
+
+          const pkgCard = `
+            <div class="flex items-center space-x-4 p-3 border rounded-lg hover:shadow-md transition">
+                <img src="${pkg.image}" class="w-20 h-20 object-cover rounded-md flex-shrink-0">
+                <div class="flex-1">
+                    <h5 class="font-semibold text-gray-900">${pkg.name}</h5>
+                    <p class="text-xs text-gray-500">${pkg.duration} • ⭐ ${pkg.rating}</p>
+                </div>
+                <div class="text-right">
+                    <span class="block text-lg font-bold text-[#FF6B35]">₹${priceInLakhs} Lakhs</span>
+                    <a href="/?package=${encodeURIComponent(pkg.name)}#booknow" class="text-sm text-blue-600 hover:underline">Book Now</a>
+                </div>
+            </div>
+            `;
+          packagesList.innerHTML += pkgCard;
+        });
+      } else {
+        packagesList.innerHTML = '<p class="text-gray-500 italic">No specific packages found. <a href="/packages" class="text-blue-600 hover:underline">View all packages</a></p>';
+      }
+
+      document.getElementById('exploreModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('exploreModal').classList.add('hidden');
+    }
+  </script>
+  <script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      once: true,
+      offset: 100
+    });
+  </script>
+</body>
+
+</html>

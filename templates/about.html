@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>
+    About Us - Discover Our Story &amp; Team
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Poppins:wght@600;700&amp;display=swap"
+    rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
+</head>
+
+<body class="bg-[#FAFBFC] text-[#2D3142]">
+  <!--- START: Header Navigation --->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <nav class="flex items-center justify-between h-20">
+        <div class="flex items-center">
+          <svg class="w-10 h-10 text-[#FF6B35]" fill="currentColor" viewbox="0 0 24 24">
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z">
+            </path>
+          </svg>
+          <span class="ml-2 text-2xl font-bold text-[#2D3142]">
+            Wayfare
+          </span>
+        </div>
+        <ul class="hidden md:flex items-center space-x-8 text-sm font-medium">
+          <li>
+            <a class="text-[#2D3142] cursor-pointer" href='/'>
+              Home
+            </a>
+          </li>
+          <li>
+            <a class="text-[#2D3142] cursor-pointer" href='/destinations'>
+              Destinations
+            </a>
+          </li>
+          <li>
+            <a class="text-[#2D3142] cursor-pointer" href='/packages'>
+              Packages
+            </a>
+          </li>
+          <li>
+            <a class="text-[#FF6B35] cursor-pointer" href='/about'>
+              About
+            </a>
+          </li>
+          <li>
+            <a class="text-[#2D3142] cursor-pointer" href='/contact'>
+              Contact
+            </a>
+          </li>
+        </ul>
+        <div class="flex items-center space-x-4">
+          {% if session.user_id %}
+          <div class="flex items-center gap-4">
+            <span class="text-sm font-medium text-[#2D3142]">Hello, {{ session.name }}</span>
+            {% if session.role == 'admin' %}
+            <a href="/admin" class="text-sm font-medium text-[#FF6B35]">Admin Panel</a>
+            {% else %}
+            <a href="/dashboard" class="text-sm font-medium text-[#FF6B35]">Dashboard</a>
+            {% endif %}
+            <a href="/logout" class="text-sm font-medium text-[#6B7280]">Logout</a>
+          </div>
+          {% else %}
+          <a href="/#signin"
+            class="hidden md:block px-7 py-3.5 text-sm font-medium text-[#FF6B35] border-2 border-[#FF6B35] rounded-lg mr-4">
+            Login
+          </a>
+          <a href="/#booknow" class="px-7 py-3.5 text-sm font-medium text-white bg-[#FF6B35] rounded-lg">
+            Book Now
+          </a>
+          {% endif %}
+        </div>
+      </nav>
+    </div>
+  </header>
+  <!--- END --->
+  <!--- START: Hero Section --->
+  <section class="relative h-[60vh] flex items-center justify-center overflow-hidden">
+    <img alt="Our Team" class="absolute inset-0 w-full h-full object-cover"
+      src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&amp;h=1080&amp;fit=crop" />
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#1A1A2E] opacity-70">
+    </div>
+    <div class="relative z-10 text-center text-white px-6 max-w-4xl" data-aos="zoom-in" data-aos-duration="1000">
+      <h1 class="text-5xl md:text-[56px] font-bold leading-tight mb-4" style="letter-spacing: -1px;">
+        Our Story &amp; Mission
+      </h1>
+      <p class="text-lg md:text-xl leading-relaxed opacity-90">
+        Creating unforgettable travel experiences for adventurers worldwide since 2010
+      </p>
+    </div>
+  </section>
+  <!--- END --->
+  <!--- START: Company Story --->
+  <section class="py-16 md:py-24">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div data-aos="fade-right">
+          <span class="text-[#FF6B35] text-sm font-semibold uppercase tracking-wide">
+            Our Journey
+          </span>
+          <h2 class="text-4xl md:text-[40px] font-semibold mt-4 mb-6 text-[#2D3142]">
+            Turning Dreams Into Destinations
+          </h2>
+          <p class="text-base leading-relaxed text-[#6B7280] mb-4">
+            Founded in 2010 by passionate travelers, Wayfare began with a simple vision: to make extraordinary travel
+            experiences accessible to everyone. What started as a small team of five explorers has grown into a global
+            community of travel enthusiasts.
+          </p>
+          <p class="text-base leading-relaxed text-[#6B7280] mb-4">
+            We've helped over 50,000 travelers discover breathtaking destinations across 75 countries. Our commitment to
+            personalized service, sustainable tourism, and authentic experiences sets us apart in the travel industry.
+          </p>
+          <p class="text-base leading-relaxed text-[#6B7280]">
+            Every journey we craft is designed with care, attention to detail, and a deep respect for local cultures and
+            environments. We believe travel transforms lives, and we're honored to be part of your adventure.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-4" data-aos="fade-left">
+          <img alt="Travel Experience" class="w-full h-64 object-cover rounded-2xl"
+            src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400&amp;h=500&amp;fit=crop" />
+          <img alt="Adventure" class="w-full h-64 object-cover rounded-2xl mt-8"
+            src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&amp;h=500&amp;fit=crop" />
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--- END --->
+  <!--- START: Mission Vision Values --->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <h2 class="text-4xl md:text-[40px] font-semibold text-[#2D3142] mb-4">
+          What Drives Us
+        </h2>
+        <p class="text-base text-[#6B7280] max-w-2xl mx-auto">
+          Our core principles guide every decision and shape every experience we create
+        </p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-[#FAFBFC] p-8 rounded-2xl" data-aos="fade-up" data-aos-delay="100">
+          <div class="w-16 h-16 bg-[#FF6B35] bg-opacity-10 rounded-2xl flex items-center justify-center mb-6">
+            <svg class="w-8 h-8 text-[#FF6B35]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+              <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              </path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-semibold mb-4 text-[#2D3142]">
+            Our Mission
+          </h3>
+          <p class="text-base leading-relaxed text-[#6B7280]">
+            To inspire and enable meaningful travel experiences that enrich lives, connect cultures, and create lasting
+            memories while promoting sustainable tourism practices.
+          </p>
+        </div>
+        <div class="bg-[#FAFBFC] p-8 rounded-2xl" data-aos="fade-up" data-aos-delay="200">
+          <div class="w-16 h-16 bg-[#004E89] bg-opacity-10 rounded-2xl flex items-center justify-center mb-6">
+            <svg class="w-8 h-8 text-[#004E89]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+              <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2">
+              </path>
+              <path
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              </path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-semibold mb-4 text-[#2D3142]">
+            Our Vision
+          </h3>
+          <p class="text-base leading-relaxed text-[#6B7280]">
+            To become the world's most trusted travel partner, recognized for exceptional service, innovative
+            itineraries, and our commitment to responsible travel.
+          </p>
+        </div>
+        <div class="bg-[#FAFBFC] p-8 rounded-2xl" data-aos="fade-up" data-aos-delay="300">
+          <div class="w-16 h-16 bg-[#06D6A0] bg-opacity-10 rounded-2xl flex items-center justify-center mb-6">
+            <svg class="w-8 h-8 text-[#06D6A0]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+              <path
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              </path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-semibold mb-4 text-[#2D3142]">
+            Our Values
+          </h3>
+          <p class="text-base leading-relaxed text-[#6B7280]">
+            Authenticity, sustainability, customer-first approach, cultural respect, and continuous innovation drive
+            everything we do in the travel industry.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--- END --->
+  <!--- START: Statistics --->
+  <section class="py-16 md:py-24 bg-gradient-to-br from-[#FF6B35] to-[#004E89]">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white" data-aos="fade-up">
+        <div>
+          <div class="text-5xl md:text-6xl font-bold mb-2">
+            50K+
+          </div>
+          <div class="text-base opacity-90">
+            Happy Travelers
+          </div>
+        </div>
+        <div>
+          <div class="text-5xl md:text-6xl font-bold mb-2">
+            75
+          </div>
+          <div class="text-base opacity-90">
+            Countries Covered
+          </div>
+        </div>
+        <div>
+          <div class="text-5xl md:text-6xl font-bold mb-2">
+            13
+          </div>
+          <div class="text-base opacity-90">
+            Years Experience
+          </div>
+        </div>
+        <div>
+          <div class="text-5xl md:text-6xl font-bold mb-2">
+            98%
+          </div>
+          <div class="text-base opacity-90">
+            Satisfaction Rate
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--- END --->
+  <!--- START: Team Section --->
+  <section class="py-16 md:py-24">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-[40px] font-semibold text-[#2D3142] mb-4">
+          Ready to Start Your Journey?
+        </h2>
+        <p class="text-base text-[#6B7280] max-w-2xl mx-auto mb-8">
+          Discover our curated travel packages or get in touch with our expert team
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <a href="/packages" class="inline-block px-8 py-3.5 bg-[#FF6B35] text-white font-bold text-sm rounded-lg">
+            Explore Packages
+          </a>
+          <a href="/contact"
+            class="inline-block px-8 py-3.5 border-2 border-[#004E89] text-[#004E89] font-bold text-sm rounded-lg">
+            Contact Our Team
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--- END --->
+  <!--- START: Commitments --->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <h2 class="text-4xl md:text-[40px] font-semibold text-[#2D3142] mb-4">
+          Our Commitments To You
+        </h2>
+        <p class="text-base text-[#6B7280] max-w-2xl mx-auto">
+          The promises we keep with every journey we create
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-[#FAFBFC] rounded-2xl p-8 shadow-sm">
+          <div class="w-12 h-12 bg-[#FF6B35] bg-opacity-10 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-[#FF6B35]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+              <path
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              </path>
+            </svg>
+          </div>
+          <h4 class="text-xl font-semibold text-[#2D3142] mb-3">
+            Safety First
+          </h4>
+          <p class="text-sm text-[#6B7280] leading-relaxed">
+            Your safety is paramount. We partner with certified providers and maintain rigorous safety standards.
+          </p>
+        </div>
+        <div class="bg-[#FAFBFC] rounded-2xl p-8 shadow-sm">
+          <div class="w-12 h-12 bg-[#06D6A0] bg-opacity-10 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-[#06D6A0]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+              <path
+                d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              </path>
+            </svg>
+          </div>
+          <h4 class="text-xl font-semibold text-[#2D3142] mb-3">
+            Sustainable Tourism
+          </h4>
+          <p class="text-sm text-[#6B7280] leading-relaxed">
+            We promote eco-friendly practices and support local communities in every destination.
+          </p>
+        </div>
+        <div class="bg-[#FAFBFC] rounded-2xl p-8 shadow-sm">
+          <div class="w-12 h-12 bg-[#F7B32B] bg-opacity-10 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-[#F7B32B]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+              <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2">
+              </path>
+            </svg>
+          </div>
+          <h4 class="text-xl font-semibold text-[#2D3142] mb-3">
+            24/7 Support
+          </h4>
+          <p class="text-sm text-[#6B7280] leading-relaxed">
+            Round-the-clock assistance wherever you are, ensuring peace of mind throughout your journey.
+          </p>
+        </div>
+        <div class="bg-[#FAFBFC] rounded-2xl p-8 shadow-sm">
+          <div class="w-12 h-12 bg-[#004E89] bg-opacity-10 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-[#004E89]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+              <path
+                d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              </path>
+            </svg>
+          </div>
+          <h4 class="text-xl font-semibold text-[#2D3142] mb-3">
+            Best Value Guarantee
+          </h4>
+          <p class="text-sm text-[#6B7280] leading-relaxed">
+            Competitive pricing without compromising quality. We match the best value in the market.
+          </p>
+        </div>
+        <div class="bg-[#FAFBFC] rounded-2xl p-8 shadow-sm">
+          <div class="w-12 h-12 bg-[#EF476F] bg-opacity-10 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-[#EF476F]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+              <path
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              </path>
+            </svg>
+          </div>
+          <h4 class="text-xl font-semibold text-[#2D3142] mb-3">
+            Personalized Service
+          </h4>
+          <p class="text-sm text-[#6B7280] leading-relaxed">
+            Every itinerary is tailored to your preferences, ensuring a unique and memorable experience.
+          </p>
+        </div>
+        <div class="bg-[#FAFBFC] rounded-2xl p-8 shadow-sm">
+          <div class="w-12 h-12 bg-[#FFA62B] bg-opacity-10 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-[#FFA62B]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2">
+              </path>
+            </svg>
+          </div>
+          <h4 class="text-xl font-semibold text-[#2D3142] mb-3">
+            Flexible Booking
+          </h4>
+          <p class="text-sm text-[#6B7280] leading-relaxed">
+            Easy modifications and transparent cancellation policies that adapt to your changing plans.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--- END --->
+  <!--- START: Testimonials --->
+  <section class="py-16 md:py-24 bg-[#FAFBFC]">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-[40px] font-semibold text-[#2D3142] mb-4">
+          What Travelers Say
+        </h2>
+        <p class="text-base text-[#6B7280] max-w-2xl mx-auto">
+          Real stories from real travelers who experienced our exceptional service
+        </p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-2xl p-8 shadow-sm">
+          <div class="flex items-center gap-1 mb-4">
+            <svg class="w-5 h-5 text-[#F7B32B]" fill="currentColor" viewbox="0 0 20 20">
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+              </path>
+            </svg>
+            <svg class="w-5 h-5 text-[#F7B32B]" fill="currentColor" viewbox="0 0 20 20">
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+              </path>
+            </svg>
+            <svg class="w-5 h-5 text-[#F7B32B]" fill="currentColor" viewbox="0 0 20 20">
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+              </path>
+            </svg>
+            <svg class="w-5 h-5 text-[#F7B32B]" fill="currentColor" viewbox="0 0 20 20">
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+              </path>
+            </svg>
+            <svg class="w-5 h-5 text-[#F7B32B]" fill="currentColor" viewbox="0 0 20 20">
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+              </path>
+            </svg>
+          </div>
+          <p class="text-base text-[#6B7280] leading-relaxed mb-6">
+            Our trip to Japan was absolutely flawless. Every detail was perfectly planned, and the local experiences
+            were authentic and memorable. Best vacation ever!
+          </p>
+          <div class="flex items-center gap-3">
+            <img alt="Jennifer Davis" class="w-12 h-12 rounded-full object-cover"
+              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&amp;h=100&amp;fit=crop" />
+            <div>
+              <div class="font-semibold text-[#2D3142]">
+                Jennifer Davis
+              </div>
+              <div class="text-sm text-[#6B7280]">
+                Tokyo Adventure
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl p-8 shadow-sm">
+          <div class="flex items-center gap-1 mb-4">
+            <svg class="w-5 h-5 text-[#F7B32B]" fill="currentColor" viewbox="0 0 20 20">
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+              </path>
+            </svg>
+            <svg class="w-5 h-5 text-[#F7B32B]" fill="currentColor" viewbox="0 0 20 20">
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+              </path>
+            </svg>
+            <svg class="w-5 h-5 text-[#F7B32B]" fill="currentColor" viewbox="0 0 20 20">
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+              </path>
+            </svg>
+            <svg class="w-5 h-5 text-[#F7B32B]" fill="currentColor" viewbox="0 0 20 20">
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+              </path>
+            </svg>
+            <svg class="w-5 h-5 text-[#F7B32B]" fill="currentColor" viewbox="0 0 20 20">
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+              </path>
+            </svg>
+          </div>
+          <p class="text-base text-[#6B7280] leading-relaxed mb-6">
+            The team went above and beyond to accommodate our special requests. Their attention to detail and customer
+            service is unmatched. Highly recommend!
+          </p>
+          <div class="flex items-center gap-3">
+            <img alt="Marcus Johnson" class="w-12 h-12 rounded-full object-cover"
+              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&amp;h=100&amp;fit=crop" />
+            <div>
+              <div class="font-semibold text-[#2D3142]">
+                Marcus Johnson
+              </div>
+              <div class="text-sm text-[#6B7280]">
+                European Explorer
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl p-8 shadow-sm">
+          <div class="flex items-center gap-1 mb-4">
+            <svg class="w-5 h-5 text-[#F7B32B]" fill="currentColor" viewbox="0 0 20 20">
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+              </path>
+            </svg>
+            <svg class="w-5 h-5 text-[#F7B32B]" fill="currentColor" viewbox="0 0 20 20">
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+              </path>
+            </svg>
+            <svg class="w-5 h-5 text-[#F7B32B]" fill="currentColor" viewbox="0 0 20 20">
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+              </path>
+            </svg>
+            <svg class="w-5 h-5 text-[#F7B32B]" fill="currentColor" viewbox="0 0 20 20">
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+              </path>
+            </svg>
+            <svg class="w-5 h-5 text-[#F7B32B]" fill="currentColor" viewbox="0 0 20 20">
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+              </path>
+            </svg>
+          </div>
+          <p class="text-base text-[#6B7280] leading-relaxed mb-6">
+            From booking to landing back home, everything exceeded expectations. The personalized itinerary matched our
+            interests perfectly. Will book again!
+          </p>
+          <div class="flex items-center gap-3">
+            <img alt="Sofia Martinez" class="w-12 h-12 rounded-full object-cover"
+              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&amp;h=100&amp;fit=crop" />
+            <div>
+              <div class="font-semibold text-[#2D3142]">
+                Sofia Martinez
+              </div>
+              <div class="text-sm text-[#6B7280]">
+                Bali Retreat
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--- END --->
+  <!--- START: Call to Action --->
+  <section class="py-16 md:py-24 bg-gradient-to-br from-[#004E89] to-[#002D5A]">
+    <div class="max-w-4xl mx-auto px-6 text-center text-white" data-aos="zoom-in">
+      <h2 class="text-4xl md:text-[40px] font-semibold mb-6">
+        Ready To Start Your Adventure?
+      </h2>
+      <p class="text-lg mb-10 opacity-90 leading-relaxed">
+        Join thousands of satisfied travelers who trusted us with their dream vacations. Let's create your perfect
+        journey together.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button class="bg-[#FF6B35] text-white px-8 py-4 rounded-lg text-base font-semibold">
+          Explore Packages
+        </button>
+        <button class="bg-white text-[#004E89] px-8 py-4 rounded-lg text-base font-semibold">
+          Contact Our Team
+        </button>
+      </div>
+    </div>
+  </section>
+  <!--- END --->
+  <!--- START: Footer --->
+  <footer class="bg-[#2D3142] text-white py-16">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="grid md:grid-cols-4 gap-12 mb-12">
+        <div>
+          <div class="text-2xl font-bold text-[#FF6B35] mb-4">
+            Wayfare
+          </div>
+          <p class="text-sm text-gray-400 leading-relaxed mb-4">
+            Creating unforgettable travel experiences since 2010. Your journey begins here.
+          </p>
+          <div class="flex gap-4">
+            <a class="w-10 h-10 bg-white bg-opacity-10 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24">
+                <path
+                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z">
+                </path>
+              </svg>
+            </a>
+            <a class="w-10 h-10 bg-white bg-opacity-10 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24">
+                <path
+                  d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z">
+                </path>
+              </svg>
+            </a>
+            <a class="w-10 h-10 bg-white bg-opacity-10 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24">
+                <path
+                  d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z">
+                </path>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">
+            Quick Links
+          </h4>
+          <ul class="space-y-3 text-sm text-gray-400">
+            <li>
+              <a href="/about" class="hover:text-white transition-colors">
+                About Us
+              </a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-white transition-colors">
+                Our Team
+              </a>
+            </li>
+            <li>
+              <a href="/destinations" class="hover:text-white transition-colors">
+                Destinations
+              </a>
+            </li>
+            <li>
+              <a href="/packages" class="hover:text-white transition-colors">
+                Travel Packages
+              </a>
+            </li>
+            <li>
+              <a href="#" class="hover:text-white transition-colors">
+                Testimonials
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">
+            Support
+          </h4>
+          <ul class="space-y-3 text-sm text-gray-400">
+            <li>
+              <a>
+                Help Center
+              </a>
+            </li>
+            <li>
+              <a>
+                Contact Us
+              </a>
+            </li>
+            <li>
+              <a>
+                Privacy Policy
+              </a>
+            </li>
+            <li>
+              <a>
+                Terms of Service
+              </a>
+            </li>
+            <li>
+              <a>
+                Booking Policy
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">
+            Contact Info
+          </h4>
+          <ul class="space-y-3 text-sm text-gray-400">
+            <li class="flex items-start gap-2">
+              <svg class="w-5 h-5 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                </path>
+                <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="2">
+                </path>
+              </svg>
+              <span>
+                123 Travel Street, Adventure City, AC 12345
+              </span>
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                <path
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                </path>
+              </svg>
+              <span>
+                hello@wayfare.com
+              </span>
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                <path
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                </path>
+              </svg>
+              <span>
+                +1 (555) 123-4567
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 pt-8 text-center text-sm text-gray-400">
+        <p>
+          © 2024 Wayfare. All rights reserved. Crafted with passion for travelers.
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!--- END --->
+  <script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      once: true,
+      offset: 100
+    });
+  </script>
+</body>
+
+</html>
